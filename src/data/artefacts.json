@@ -1,0 +1,251 @@
+[
+  {
+    "name": "None",
+    "cost": 0,
+    "type": "common"
+  },
+  {
+    "name": "Blade of Slashing",
+    "cost": 5,
+    "type": "common"
+  },
+  {
+    "name": "Fire-Oil",
+    "cost": 5,
+    "type": "common"
+  },
+  {
+    "name": "Healing Brew",
+    "cost": 5,
+    "type": "common"
+  },
+  {
+    "name": "Liliana's Tear",
+    "cost": 5,
+    "type": "common"
+  },
+  {
+    "name": "Mace of Crushing",
+    "cost": 5,
+    "type": "common"
+  },
+  {
+    "name": "Staying Stone",
+    "cost": 5,
+    "type": "common"
+  },
+  {
+    "name": "War-bow of Kaba",
+    "cost": 5,
+    "type": "common"
+  },
+  {
+    "name": "Hann's Sanguinary Scripture",
+    "cost": 10,
+    "type": "common"
+  },
+  {
+    "name": "Mead of Madness",
+    "cost": 10,
+    "type": "common"
+  },
+  {
+    "name": "Pipes of Terror",
+    "cost": 10,
+    "type": "common"
+  },
+  {
+    "name": "Piercing Arrow",
+    "cost": 10,
+    "type": "common"
+  },
+  {
+    "name": "Aegis of the Elohi",
+    "cost": 15,
+    "type": "common"
+  },
+  {
+    "name": "Blood of the Old King",
+    "cost": 15,
+    "type": "common"
+  },
+  {
+    "name": "Chalice of Wrath",
+    "cost": 15,
+    "type": "common"
+  },
+  {
+    "name": "Dwarven Ale",
+    "cost": 15,
+    "type": "common"
+  },
+  {
+    "name": "Helm of Confidence",
+    "cost": 15,
+    "type": "common"
+  },
+  {
+    "name": "Sacred Horn",
+    "cost": 15,
+    "type": "common"
+  },
+  {
+    "name": "Sir Jesse's Boots of Striding",
+    "cost": 15,
+    "type": "common"
+  },
+  {
+    "name": "Blessing of the Gods",
+    "cost": {
+      "He": 20,
+      "T": 20,
+      "R": 20,
+      "H": 30,
+      "L": 30
+    },
+    "type": "common"
+  },
+  {
+    "name": "Brew of Haste",
+    "cost": 20,
+    "type": "common"
+  },
+  {
+    "name": "Chant of Hate",
+    "cost": {
+      "He": 20,
+      "T": 20,
+      "R": 20,
+      "H": 30,
+      "L": 30
+    },
+    "type": "common"
+  },
+  {
+    "name": "Dragonshard Shield",
+    "cost": 20,
+    "type": "common"
+  },
+  {
+    "name": "Hammer of Measured Force",
+    "cost": 20,
+    "type": "common"
+  },
+  {
+    "name": "Maccwar's Potion of the Caterpillar",
+    "cost": 20,
+    "type": "common"
+  },
+  {
+    "name": "The Scrying Gem",
+    "cost": 25,
+    "type": "common"
+  },
+  {
+    "name": "Diadem of Dragon-kind",
+    "cost": 30,
+    "type": "common"
+  },
+  {
+    "name": "Brew of Strength",
+    "cost": {
+      "He": 30,
+      "T": 30,
+      "R": 30,
+      "H": 40,
+      "L": 40
+    },
+    "type": "common"
+  },
+  {
+    "name": "Brew of Sharpness",
+    "cost": {
+      "He": 35,
+      "T": 35,
+      "R": 35,
+      "H": 45,
+      "L": 45
+    },
+    "type": "common"
+  },
+  {
+    "name": "Wine of Elvenkind",
+    "cost": 40,
+    "type": "common"
+  },
+  {
+    "name": "Crystal Pendant of Retribution",
+    "cost": 50,
+    "type": "common"
+  },
+  {
+    "name": "Conjurer's Staff",
+    "cost": 10,
+    "type": "heroic"
+  },
+  {
+    "name": "Darklord's Onyx Ring",
+    "cost": 10,
+    "type": "heroic"
+  },
+  {
+    "name": "Mournful Blade",
+    "cost": 15,
+    "type": "heroic"
+  },
+  {
+    "name": "Trickster's Wand",
+    "cost": 15,
+    "type": "heroic"
+  },
+  {
+    "name": "Blade of the Beast Slayer",
+    "cost": 20,
+    "type": "heroic"
+  },
+  {
+    "name": "Inspiring Talismman",
+    "cost": 20,
+    "type": "heroic"
+  },
+  {
+    "name": "Tome of Darkness",
+    "cost": 20,
+    "type": "heroic"
+  },
+  {
+    "name": "Lute of Insatiable Darkness",
+    "cost": 25,
+    "type": "heroic"
+  },
+  {
+    "name": "Zephyr Crown",
+    "cost": 25,
+    "type": "heroic"
+  },
+  {
+    "name": "Boots of Levitation",
+    "cost": 30,
+    "type": "heroic"
+  },
+  {
+    "name": "Boots of the Seven Leagues",
+    "cost": 30,
+    "type": "heroic"
+  },
+  {
+    "name": "Shroud of the Saint",
+    "cost": 30,
+    "type": "heroic"
+  },
+  {
+    "name": "The Boomstick",
+    "cost": 30,
+    "type": "heroic"
+  },
+  {
+    "name": "Wings of Honeymaze",
+    "cost": 40,
+    "type": "heroic"
+  }
+]
