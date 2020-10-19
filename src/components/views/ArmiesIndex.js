@@ -22,7 +22,7 @@ const ArmiesIndex = () => {
       case 'addSectionToList':
         return addSectionToListDispatchFunction(armyListState, action);
       case 'addUnitToList':
-        return addUnitToListDispatchFunction(armyListState, action);
+        return addUnitToSectionDispatchFunction(armyListState, action);
       case 'editUnit':
         return editUnitDispatchFunction(armyListState, action);
       case 'deleteUnit':
@@ -36,25 +36,29 @@ const ArmiesIndex = () => {
     console.log('todo!');
   }
 
-  function addUnitToListDispatchFunction(armyListState, action) {
-    const armyListIndex = armyListState.findIndex((armyList) => armyList.name === action.armyName);
-    const selectedUnit = {
-      unitId: uuidv4(),
-      unitDetails: action.unit,
-      selectedUpgrades: [],
-      unitCost: action.unit.cost,
-      armyName: action.armyName,
-    };
-    if (armyListIndex === -1) {
-      return [...armyListState, { name: action.armyName, units: [selectedUnit] }];
-    } else {
-      return armyListState.map((army, index) => {
-        if (index !== armyListIndex) return army;
-        return { ...army, units: [...army.units, selectedUnit] };
-      });
-    }
-    // still need to update points values
+  function addUnitToSectionDispatchFunction(armyListState, action) {
+    console.log('todo!');
   }
+
+  // function addUnitToListDispatchFunction(armyListState, action) {
+  //   const armyListIndex = armyListState.findIndex((armyList) => armyList.name === action.armyName);
+  //   const selectedUnit = {
+  //     unitId: uuidv4(),
+  //     unitDetails: action.unit,
+  //     selectedUpgrades: [],
+  //     unitCost: action.unit.cost,
+  //     armyName: action.armyName,
+  //   };
+  //   if (armyListIndex === -1) {
+  //     return [...armyListState, { name: action.armyName, units: [selectedUnit] }];
+  //   } else {
+  //     return armyListState.map((army, index) => {
+  //       if (index !== armyListIndex) return army;
+  //       return { ...army, units: [...army.units, selectedUnit] };
+  //     });
+  //   }
+  //   // still need to update points values
+  // }
 
   function editUnitDispatchFunction(armyListState, action) {
     const armyListIndex = armyListState.findIndex((armyList) => armyList.name === action.unit.armyName);
@@ -69,6 +73,7 @@ const ArmiesIndex = () => {
       };
     });
     // still need to update points values
+    // need to fix for sections
   }
 
   function deleteUnitDispatchFunction(armyListState, action) {
@@ -83,6 +88,7 @@ const ArmiesIndex = () => {
     });
     // if last unit in army section, delete army section
     // if last unit in list, setFromArmyList to false
+    // need to fix for sections
   }
 
   function init() {
@@ -98,7 +104,13 @@ const ArmiesIndex = () => {
     setDisplay('armyUnitsIndex');
   }
 
-  function handleAddUnitToListWithArmyAndUnit(armyName, unit) {
+  function handleAddUnitToSectionWithArmyUnitAndSection(armyName, unit, section) {
+    dispatch({ type: 'addUnitToList', armyName, unit });
+    setDisplay('armyList');
+    // then go to army list display
+  }
+
+  function handleAddSectionToListWithArmyAndUnit(armyName, unit) {
     dispatch({ type: 'addUnitToList', armyName, unit });
     setDisplay('armyList');
     // then go to army list display

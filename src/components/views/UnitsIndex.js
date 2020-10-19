@@ -2,7 +2,15 @@ import React from 'react';
 import UnitRow from 'components/UnitRow';
 import Button from 'components/common/Button';
 
-const UnitsIndex = ({ army, goToDisplay, selectUnit, selectArmy, fromArmyList }) => {
+const UnitsIndex = ({
+  army,
+  unitSizesToDisplay,
+  displayIrregular,
+  goToDisplay,
+  selectUnit,
+  selectArmy,
+  fromArmyList,
+}) => {
   function handleClickAdd(unit) {
     selectUnit(unit);
     selectArmy(army.name);
@@ -11,10 +19,18 @@ const UnitsIndex = ({ army, goToDisplay, selectUnit, selectArmy, fromArmyList })
 
   const displaySelectOtherArmy = true;
 
+  const unitsToDisplay = army.units
+    .filter((unit) => {
+      return unitSizesToDisplay.includes(unit.size);
+    })
+    .filter((unit) => {
+      return !unit.irregular || displayIrregular;
+    });
+
   return (
     <section className="units-index">
       {displaySelectOtherArmy && <Button text="Select other army" onClick={() => goToDisplay('armiesIndex')} />}
-      {army.units.map((unit, index) => {
+      {unitsToDisplay.map((unit, index) => {
         return (
           <UnitRow
             unit={unit}
