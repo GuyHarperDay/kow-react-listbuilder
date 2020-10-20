@@ -1,8 +1,10 @@
 import React from 'react';
-import UnitRow from 'components/UnitRow';
+import MultiUnitRow from 'components/MultiUnitRow';
 import Button from 'components/common/Button';
 
 const UnitsIndex = ({ army, goToDisplay, selectUnit, selectArmy, fromArmyList }) => {
+  // All the units in the selected faction
+
   function handleClickAdd(unit) {
     selectUnit(unit);
     selectArmy(army.name);
@@ -11,21 +13,21 @@ const UnitsIndex = ({ army, goToDisplay, selectUnit, selectArmy, fromArmyList })
 
   const displaySelectOtherArmy = true;
 
+  const mergedFactionList = [];
+  army.units.forEach((unit) => {
+    const mergedUnitIndex = mergedFactionList.findIndex((unitArr) => unitArr[0].name === unit.name);
+    if (mergedUnitIndex === -1) {
+      mergedFactionList.push([unit]);
+    } else {
+      mergedFactionList[mergedUnitIndex].push(unit);
+    }
+  });
+
   return (
     <section className="units-index">
       {displaySelectOtherArmy && <Button text="Select other army" onClick={() => goToDisplay('armiesIndex')} />}
-      {army.units.map((unit, index) => {
-        return (
-          <UnitRow
-            unit={unit}
-            displayAddButton={true}
-            displayHead={!(army.units[index - 1] && army.units[index - 1].name === unit.name)}
-            displaySpecialRules={!army.units[index + 1] || army.units[index + 1].name !== unit.name}
-            displayRowHeadings={!(army.units[index - 1] && army.units[index - 1].name === unit.name)}
-            handleClickAdd={() => handleClickAdd(unit)}
-            key={`${unit.name}-${unit.size}`}
-          />
-        );
+      {mergedFactionList.map((unitArr, index) => {
+        return <MultiUnitRow units={unitArr} handleClickAdd={(u) => handleClickAdd(u)} key={unitArr[0].name} />;
       })}
       <Button text="Cancel" onClick={() => goToDisplay(fromArmyList ? 'armyList' : 'armiesIndex')} />
     </section>

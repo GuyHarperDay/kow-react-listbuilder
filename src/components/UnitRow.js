@@ -1,7 +1,7 @@
 import React from 'react';
 import Button from 'components/common/Button.js';
 
-const UnitsIndex = ({
+const UnitRow = ({
   unit,
   displayAddButton,
   displayEditButton,
@@ -74,4 +74,4 @@ const UnitsIndex = ({
   );
 };
 
-export default UnitsIndex;
+export default UnitRow;

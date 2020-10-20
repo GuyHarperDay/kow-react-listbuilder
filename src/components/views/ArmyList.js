@@ -3,6 +3,8 @@ import UnitRow from 'components/UnitRow';
 import Button from 'components/common/Button';
 
 const ArmyList = ({ armyList, goToDisplay, setFromArmyList, selectUnit }) => {
+  // The list the user has been building
+
   function handleAddUnitClick() {
     goToDisplay('armyUnitsIndex');
     setFromArmyList(true);

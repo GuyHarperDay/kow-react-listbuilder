@@ -131,8 +131,6 @@ const ArmiesIndex = () => {
       <main>
         <UnitsIndex
           army={armies.find((army) => army.name === selectedArmy)}
-          unitSizesToDisplay={['Regiment', 'Horde', 'Legion']}
-          displayIrregular={false}
           goToDisplay={setDisplay}
           selectUnit={setSelectedUnit}
           selectArmy={setSelectedArmy}
