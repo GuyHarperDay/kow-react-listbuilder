@@ -12,7 +12,6 @@ const UnitSelect = ({
   handleDeleteUnit,
   deleteConfirm,
 }) => {
-
   function handleCancelClick() {
     goToDisplay(editingUnit ? 'armyList' : 'unitsIndex');
   }
@@ -24,24 +23,24 @@ const UnitSelect = ({
   const unitDetails = unit.unitDetails ? unit.unitDetails : unit;
 
   if (!deleteConfirm) {
-    return <section className="unit-select">
-      <UnitRow
-        unit={unit}
-        displayAddButton={false}
-      />
-      <Button text="Save" onClick={handleSaveClick} />
-      {editingUnit ? <Button text="Delete" onClick={() => goToDisplay('deleteConfirm')} /> : null}
-      <Button text="Cancel" onClick={handleCancelClick} />
-    </section>
+    return (
+      <section className="unit-select">
+        <UnitRow unit={unit} displayEditButton={false} />
+        <Button text="Save" onClick={handleSaveClick} />
+        {editingUnit ? <Button text="Delete" onClick={() => goToDisplay('deleteConfirm')} /> : null}
+        <Button text="Cancel" onClick={handleCancelClick} />
+      </section>
+    );
   } else {
-    return <section className="delete-confirm">
-      <p>Delete this unit?</p>
-      <p>{unitDetails.name}</p>
-      <Button text="Delete" onClick={() => handleDeleteUnit(unit)} />
-      <Button text="Cancel" onClick={() => goToDisplay('unitSelect')} />
-    </section>
+    return (
+      <section className="delete-confirm">
+        <p>Delete this unit?</p>
+        <p>{unitDetails.name}</p>
+        <Button text="Delete" onClick={() => handleDeleteUnit(unit)} />
+        <Button text="Cancel" onClick={() => goToDisplay('unitSelect')} />
+      </section>
+    );
   }
-
 };
 
 export default UnitSelect;

@@ -5,6 +5,7 @@ import UnitSelect from 'components/views/UnitSelect';
 import ArmyList from 'components/views/ArmyList';
 import { v4 as uuidv4 } from 'uuid';
 import armiesData from '../../data/armies.json';
+import calculateUnlocks from '../../helpers/unlocks';
 
 const ArmiesIndex = () => {
   const [armies, setArmies] = useState([]);
@@ -19,8 +20,6 @@ const ArmiesIndex = () => {
 
   function reducer(armyListState, action) {
     switch (action.type) {
-      case 'addSectionToList':
-        return addSectionToListDispatchFunction(armyListState, action);
       case 'addUnitToList':
         return addUnitToListDispatchFunction(armyListState, action);
       case 'editUnit':
@@ -32,25 +31,28 @@ const ArmiesIndex = () => {
     }
   }
 
-  function addSectionToListDispatchFunction(armyListState, action) {
-    console.log('todo!');
-  }
-
   function addUnitToListDispatchFunction(armyListState, action) {
     const armyListIndex = armyListState.findIndex((armyList) => armyList.name === action.armyName);
     const selectedUnit = {
-      unitId: uuidv4(),
+      unitId: action.unitId,
       unitDetails: action.unit,
       selectedUpgrades: [],
       unitCost: action.unit.cost,
       armyName: action.armyName,
     };
     if (armyListIndex === -1) {
-      return [...armyListState, { name: action.armyName, units: [selectedUnit] }];
+      return [
+        ...armyListState,
+        { name: action.armyName, units: [selectedUnit], unlocks: calculateUnlocks([selectedUnit]) },
+      ];
     } else {
       return armyListState.map((army, index) => {
         if (index !== armyListIndex) return army;
-        return { ...army, units: [...army.units, selectedUnit] };
+        return {
+          ...army,
+          units: [...army.units, selectedUnit],
+          unlocks: calculateUnlocks([...army.units, selectedUnit]),
+        };
       });
     }
     // still need to update points values
@@ -72,6 +74,7 @@ const ArmiesIndex = () => {
   }
 
   function deleteUnitDispatchFunction(armyListState, action) {
+    console.log('deleting unit');
     console.log('action in deleteDispatch - ', action);
     const armyListIndex = armyListState.findIndex((armyList) => armyList.name === action.unit.armyName);
     return armyListState.map((army, index) => {
@@ -79,6 +82,7 @@ const ArmiesIndex = () => {
       return {
         ...army,
         units: army.units.filter((unit) => unit.unitId !== action.unit.unitId),
+        unlocks: calculateUnlocks(army.units.filter((unit) => unit.unitId !== action.unit.unitId)),
       };
     });
     // if last unit in army section, delete army section
@@ -99,7 +103,7 @@ const ArmiesIndex = () => {
   }
 
   function handleAddUnitToListWithArmyAndUnit(armyName, unit) {
-    dispatch({ type: 'addUnitToList', armyName, unit });
+    dispatch({ type: 'addUnitToList', armyName, unit, unitId: uuidv4() });
     setDisplay('armyList');
     // then go to army list display
   }
@@ -107,6 +111,7 @@ const ArmiesIndex = () => {
   function handleEditUnit(unit) {
     dispatch({ type: 'editUnit', unit });
     setDisplay('armyList');
+    // fix: cancel after only clicking on one unit and not saving it
   }
 
   function handleDeleteUnit(unit) {

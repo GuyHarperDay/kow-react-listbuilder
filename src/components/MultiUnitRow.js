@@ -23,7 +23,7 @@ const UnitsIndex = ({ units, handleClickAdd }) => {
             <th>Pts</th>
           </tr>
           {units.map((unit) => (
-            <tr>
+            <tr key={`${unit.name}-${unit.size}`}>
               <td>{`${unit.size} (${unit.modelCount})`}</td>
               <td>{unit.speed}</td>
               <td>{unit.melee}</td>
@@ -43,11 +43,11 @@ const UnitsIndex = ({ units, handleClickAdd }) => {
       </table>
       <div className="unit-row__special">
         <p>
-          <span class="unit-row__label">Special: </span>
+          <span className="unit-row__label">Special: </span>
           {units[0].specialRules}
         </p>
         <p>
-          <span class="unit-row__label">Keywords: </span>
+          <span className="unit-row__label">Keywords: </span>
           {units[0].keywords}
         </p>
       </div>

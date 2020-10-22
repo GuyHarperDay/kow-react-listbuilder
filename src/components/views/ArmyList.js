@@ -20,15 +20,14 @@ const ArmyList = ({ armyList, goToDisplay, setFromArmyList, selectUnit }) => {
     <section className="army-list">
       {armyList.map((faction) => {
         return (
-          <div>
-            <h2 class="army-list__section-heading">{faction.name}</h2>
+          <div key={faction.name}>
+            <h2 className="army-list__section-heading">{faction.name}</h2>
             <p>{faction.cost}</p>
             {faction.units.map((unit) => {
               return (
                 <UnitRow
                   unit={unit}
-                  key={unit.id}
-                  displayAddButton={false}
+                  key={unit.unitId}
                   displayEditButton={true}
                   handleClickEdit={() => handleEditUnitClick(unit)}
                 />
