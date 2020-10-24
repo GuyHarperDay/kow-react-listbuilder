@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/kow-react-listbuilder/static/css/main.5ecd60fb.chunk.css",
+    "main.js": "/kow-react-listbuilder/static/js/main.85010811.chunk.js",
+    "main.js.map": "/kow-react-listbuilder/static/js/main.85010811.chunk.js.map",
+    "runtime-main.js": "/kow-react-listbuilder/static/js/runtime-main.3099e4c2.js",
+    "runtime-main.js.map": "/kow-react-listbuilder/static/js/runtime-main.3099e4c2.js.map",
+    "static/js/2.5f55bb79.chunk.js": "/kow-react-listbuilder/static/js/2.5f55bb79.chunk.js",
+    "static/js/2.5f55bb79.chunk.js.map": "/kow-react-listbuilder/static/js/2.5f55bb79.chunk.js.map",
+    "index.html": "/kow-react-listbuilder/index.html",
+    "precache-manifest.1629b2c49a456c5d7883b64ab45ac544.js": "/kow-react-listbuilder/precache-manifest.1629b2c49a456c5d7883b64ab45ac544.js",
+    "service-worker.js": "/kow-react-listbuilder/service-worker.js",
+    "static/css/main.5ecd60fb.chunk.css.map": "/kow-react-listbuilder/static/css/main.5ecd60fb.chunk.css.map",
+    "static/js/2.5f55bb79.chunk.js.LICENSE.txt": "/kow-react-listbuilder/static/js/2.5f55bb79.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.3099e4c2.js",
+    "static/js/2.5f55bb79.chunk.js",
+    "static/css/main.5ecd60fb.chunk.css",
+    "static/js/main.85010811.chunk.js"
+  ]
+}
