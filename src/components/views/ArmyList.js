@@ -3,7 +3,7 @@ import UnitRow from 'components/unit/Unit';
 import Button from 'components/common/Button';
 import UnlocksBanner from 'components/UnlocksBanner';
 
-const ArmyList = ({ armyList, goToDisplay, setFromArmyList, selectUnit, unallocated }) => {
+const ArmyList = ({ armyList, goToDisplay, setFromArmyList, selectUnit, unallocated, points }) => {
   // The list the user has been building
 
   function handleAddUnitClick() {
@@ -24,7 +24,7 @@ const ArmyList = ({ armyList, goToDisplay, setFromArmyList, selectUnit, unalloca
           <div key={faction.name}>
             <UnlocksBanner armyName={faction.name} unallocated={unallocated} />
             <h2 className="army-list__section-heading">{faction.name}</h2>
-            <p>{faction.cost}</p>
+            <p>{points[faction.name]} points</p>
             {faction.units.map((unit) => {
               return (
                 <UnitRow

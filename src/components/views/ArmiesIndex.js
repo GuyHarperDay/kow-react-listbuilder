@@ -6,6 +6,7 @@ import ArmyList from 'components/views/ArmyList';
 import { v4 as uuidv4 } from 'uuid';
 import armiesData from '../../data/armies.json';
 import calculateUnallocated from '../../helpers/unlocks';
+import calculatePointsTotal from '../../helpers/points';
 
 const ArmiesIndex = () => {
   const [armies, setArmies] = useState([]);
@@ -15,24 +16,11 @@ const ArmiesIndex = () => {
   const [selectedUnit, setSelectedUnit] = useState(null);
   const [fromArmyList, setFromArmyList] = useState(null);
   const [unallocated, setUnallocated] = useState({});
+  const [points, setPoints] = useState({});
 
   const initialArmyListState = [];
-  const [armyListState, dispatch] = useReducer(reducer, initialArmyListState);
 
-  function reducer(armyListState, action) {
-    switch (action.type) {
-      case 'addUnitToList':
-        return addUnitToListDispatchFunction(armyListState, action);
-      case 'editUnit':
-        return editUnitDispatchFunction(armyListState, action);
-      case 'deleteUnit':
-        return deleteUnitDispatchFunction(armyListState, action);
-      default:
-        throw new Error();
-    }
-  }
-
-  function addUnitToListDispatchFunction(armyListState, action) {
+  const addUnitToListDispatchFunction = (armyListState, action) => {
     const armyListIndex = armyListState.findIndex((armyList) => armyList.name === action.armyName);
     const selectedUnit = {
       unitId: action.unitId,
@@ -53,9 +41,10 @@ const ArmiesIndex = () => {
       });
     }
     // still need to update points values
-  }
+    // still need to set limits on number of duplicates
+  };
 
-  function editUnitDispatchFunction(armyListState, action) {
+  const editUnitDispatchFunction = (armyListState, action) => {
     const armyListIndex = armyListState.findIndex((armyList) => armyList.name === action.unit.armyName);
     return armyListState.map((army, index) => {
       if (index !== armyListIndex) return army;
@@ -68,9 +57,9 @@ const ArmiesIndex = () => {
       };
     });
     // still need to update points values
-  }
+  };
 
-  function deleteUnitDispatchFunction(armyListState, action) {
+  const deleteUnitDispatchFunction = (armyListState, action) => {
     console.log('deleting unit');
     console.log('action in deleteDispatch - ', action);
     const armyListIndex = armyListState.findIndex((armyList) => armyList.name === action.unit.armyName);
@@ -83,45 +72,72 @@ const ArmiesIndex = () => {
     });
     // if last unit in army section, delete army section
     // if last unit in list, setFromArmyList to false
-  }
+  };
 
-  function init() {
+  const reducer = (armyListState, action) => {
+    switch (action.type) {
+      case 'addUnitToList':
+        return addUnitToListDispatchFunction(armyListState, action);
+      case 'editUnit':
+        return editUnitDispatchFunction(armyListState, action);
+      case 'deleteUnit':
+        return deleteUnitDispatchFunction(armyListState, action);
+      default:
+        throw new Error();
+    }
+  };
+  const [armyListState, dispatch] = useReducer(reducer, initialArmyListState);
+
+  const init = () => {
     setIsLoaded(true);
     setArmies(armiesData);
     setDisplay('armiesIndex');
-  }
+  };
 
-  useEffect(init, []);
-  useEffect(() => {
-    const unallocatedObj = armyListState.reduce((unallocatedObj, army) => {
+  const processUnlocks = () => {
+    const unallocated = armyListState.reduce((unallocatedObj, army) => {
       unallocatedObj[army.name] = calculateUnallocated(army.units);
       return unallocatedObj;
     }, {});
-    setUnallocated(unallocatedObj);
+    setUnallocated(unallocated);
+  };
+
+  const processPoints = () => {
+    const points = armyListState.reduce((pointsObj, army) => {
+      pointsObj[army.name] = calculatePointsTotal(army.units);
+      return pointsObj;
+    }, {});
+    setPoints(points);
+  };
+
+  useEffect(init, []);
+  useEffect(() => {
+    processUnlocks();
+    processPoints();
   }, [armyListState]);
 
-  function handleArmyButtonClick(armyName) {
+  const handleArmyButtonClick = (armyName) => {
     setSelectedArmy(armyName);
     setDisplay('factionUnitsIndex');
-  }
+  };
 
-  function handleAddUnitToListWithArmyAndUnit(armyName, unit) {
+  const handleAddUnitToListWithArmyAndUnit = (armyName, unit) => {
     dispatch({ type: 'addUnitToList', armyName, unit, unitId: uuidv4() });
     setDisplay('armyList');
     // then go to army list display
-  }
+  };
 
-  function handleEditUnit(unit) {
+  const handleEditUnit = (unit) => {
     dispatch({ type: 'editUnit', unit });
     setDisplay('armyList');
     // fix: cancel after only clicking on one unit and not saving it
-  }
+  };
 
-  function handleDeleteUnit(unit) {
+  const handleDeleteUnit = (unit) => {
     dispatch({ type: 'deleteUnit', unit });
     setDisplay('armyList');
     // setDisplay to armyList or armiesIndex
-  }
+  };
 
   if (!isLoaded) {
     return <div>Loading...</div>;
@@ -172,6 +188,7 @@ const ArmiesIndex = () => {
           setFromArmyList={setFromArmyList}
           selectUnit={setSelectedUnit}
           unallocated={unallocated}
+          points={points}
         />
       </main>
     );
