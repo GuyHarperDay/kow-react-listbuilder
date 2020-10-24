@@ -1,9 +1,17 @@
 import React from 'react';
-import MultiUnitRow from 'components/MultiUnitRow';
+import MultiUnitRow from 'components/unit/MultiUnit';
 import Button from 'components/common/Button';
 import UnlocksBanner from 'components/UnlocksBanner';
 
-const UnitsIndex = ({ army, goToDisplay, selectUnit, selectArmy, fromArmyList, unallocated }) => {
+const FactionUnitsIndex = ({
+  army,
+  goToDisplay,
+  selectUnit,
+  selectArmy,
+  fromArmyList,
+  unallocated,
+  displaySelectOtherArmy,
+}) => {
   // All the units in the selected faction
 
   function handleClickAdd(unit) {
@@ -11,8 +19,6 @@ const UnitsIndex = ({ army, goToDisplay, selectUnit, selectArmy, fromArmyList, u
     selectArmy(army.name);
     goToDisplay('unitSelect');
   }
-
-  const displaySelectOtherArmy = true;
 
   const mergedFactionList = [];
   army.units.forEach((unit) => {
@@ -36,4 +42,4 @@ const UnitsIndex = ({ army, goToDisplay, selectUnit, selectArmy, fromArmyList, u
   );
 };
 
-export default UnitsIndex;
+export default FactionUnitsIndex;

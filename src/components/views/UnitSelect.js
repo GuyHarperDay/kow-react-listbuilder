@@ -1,5 +1,5 @@
 import React from 'react';
-import UnitRow from 'components/UnitRow';
+import UnitRow from 'components/unit/Unit';
 import Button from 'components/common/Button';
 
 const UnitSelect = ({
@@ -13,7 +13,7 @@ const UnitSelect = ({
   deleteConfirm,
 }) => {
   function handleCancelClick() {
-    goToDisplay(editingUnit ? 'armyList' : 'unitsIndex');
+    goToDisplay(editingUnit ? 'armyList' : 'factionUnitsIndex');
   }
 
   function handleSaveClick() {

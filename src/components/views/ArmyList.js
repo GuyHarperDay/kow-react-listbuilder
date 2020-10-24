@@ -1,12 +1,13 @@
 import React from 'react';
-import UnitRow from 'components/UnitRow';
+import UnitRow from 'components/unit/Unit';
 import Button from 'components/common/Button';
+import UnlocksBanner from 'components/UnlocksBanner';
 
-const ArmyList = ({ armyList, goToDisplay, setFromArmyList, selectUnit }) => {
+const ArmyList = ({ armyList, goToDisplay, setFromArmyList, selectUnit, unallocated }) => {
   // The list the user has been building
 
   function handleAddUnitClick() {
-    goToDisplay('armyUnitsIndex');
+    goToDisplay('factionUnitsIndex');
     setFromArmyList(true);
   }
 
@@ -21,6 +22,7 @@ const ArmyList = ({ armyList, goToDisplay, setFromArmyList, selectUnit }) => {
       {armyList.map((faction) => {
         return (
           <div key={faction.name}>
+            <UnlocksBanner armyName={faction.name} unallocated={unallocated} />
             <h2 className="army-list__section-heading">{faction.name}</h2>
             <p>{faction.cost}</p>
             {faction.units.map((unit) => {

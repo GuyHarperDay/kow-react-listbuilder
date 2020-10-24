@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useReducer } from 'react';
 import Button from 'components/common/Button';
-import UnitsIndex from 'components/views/UnitsIndex';
+import FactionUnitsIndex from 'components/views/FactionUnitsIndex';
 import UnitSelect from 'components/views/UnitSelect';
 import ArmyList from 'components/views/ArmyList';
 import { v4 as uuidv4 } from 'uuid';
@@ -102,7 +102,7 @@ const ArmiesIndex = () => {
 
   function handleArmyButtonClick(armyName) {
     setSelectedArmy(armyName);
-    setDisplay('armyUnitsIndex');
+    setDisplay('factionUnitsIndex');
   }
 
   function handleAddUnitToListWithArmyAndUnit(armyName, unit) {
@@ -134,16 +134,17 @@ const ArmiesIndex = () => {
         })}
       </main>
     );
-  } else if (display === 'armyUnitsIndex') {
+  } else if (display === 'factionUnitsIndex') {
     return (
       <main>
-        <UnitsIndex
+        <FactionUnitsIndex
           army={armies.find((army) => army.name === selectedArmy)}
           goToDisplay={setDisplay}
           selectUnit={setSelectedUnit}
           selectArmy={setSelectedArmy}
           fromArmyList={fromArmyList}
           unallocated={unallocated}
+          displaySelectOtherArmy={!!armyListState.length}
         />
       </main>
     );
@@ -170,6 +171,7 @@ const ArmiesIndex = () => {
           goToDisplay={setDisplay}
           setFromArmyList={setFromArmyList}
           selectUnit={setSelectedUnit}
+          unallocated={unallocated}
         />
       </main>
     );
