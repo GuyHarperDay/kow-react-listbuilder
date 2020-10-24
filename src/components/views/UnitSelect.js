@@ -25,7 +25,7 @@ const UnitSelect = ({
   if (!deleteConfirm) {
     return (
       <section className="unit-select">
-        <UnitRow unit={unit} displayEditButton={false} />
+        <UnitRow unit={unit} displayEditButton={false} view="unitSelect" />
         <Button text="Save" onClick={handleSaveClick} />
         {editingUnit ? <Button text="Delete" onClick={() => goToDisplay('deleteConfirm')} /> : null}
         <Button text="Cancel" onClick={handleCancelClick} />

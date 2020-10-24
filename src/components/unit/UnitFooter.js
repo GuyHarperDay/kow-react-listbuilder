@@ -1,6 +1,7 @@
 import React from 'react';
+import UnitOptions from './UnitOptions';
 
-const UnitFooter = ({ unit }) => {
+const UnitFooter = ({ unit, view }) => {
   const unitDetails = unit.unitDetails ? unit.unitDetails : unit;
 
   return (
@@ -20,6 +21,7 @@ const UnitFooter = ({ unit }) => {
             {unitDetails.spellcaster}
           </p>
         )}
+        {unitDetails.options.length && <UnitOptions unit={unit} view={view} />}
       </div>
     </div>
   );

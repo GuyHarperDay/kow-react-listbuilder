@@ -35,7 +35,14 @@ const FactionUnitsIndex = ({
       {displaySelectOtherArmy && <Button text="Select other army" onClick={() => goToDisplay('armiesIndex')} />}
       <UnlocksBanner armyName={army.name} unallocated={unallocated} />
       {mergedFactionList.map((unitArr, index) => {
-        return <MultiUnitRow units={unitArr} handleClickAdd={(u) => handleClickAdd(u)} key={unitArr[0].name} />;
+        return (
+          <MultiUnitRow
+            units={unitArr}
+            handleClickAdd={(u) => handleClickAdd(u)}
+            key={unitArr[0].name}
+            view={'factionUnitsIndex'}
+          />
+        );
       })}
       <Button text="Cancel" onClick={() => goToDisplay(fromArmyList ? 'armyList' : 'armiesIndex')} />
     </section>

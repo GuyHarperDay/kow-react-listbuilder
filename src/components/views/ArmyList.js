@@ -32,6 +32,7 @@ const ArmyList = ({ armyList, goToDisplay, setFromArmyList, selectUnit, unalloca
                   key={unit.unitId}
                   displayEditButton={true}
                   handleClickEdit={() => handleEditUnitClick(unit)}
+                  view={'armyList'}
                 />
               );
             })}
