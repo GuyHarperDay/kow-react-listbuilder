@@ -1,8 +1,9 @@
 import React from 'react';
 import MultiUnitRow from 'components/MultiUnitRow';
 import Button from 'components/common/Button';
+import UnlocksBanner from 'components/UnlocksBanner';
 
-const UnitsIndex = ({ army, goToDisplay, selectUnit, selectArmy, fromArmyList }) => {
+const UnitsIndex = ({ army, goToDisplay, selectUnit, selectArmy, fromArmyList, unallocated }) => {
   // All the units in the selected faction
 
   function handleClickAdd(unit) {
@@ -26,6 +27,7 @@ const UnitsIndex = ({ army, goToDisplay, selectUnit, selectArmy, fromArmyList })
   return (
     <section className="units-index">
       {displaySelectOtherArmy && <Button text="Select other army" onClick={() => goToDisplay('armiesIndex')} />}
+      <UnlocksBanner armyName={army.name} unallocated={unallocated} />
       {mergedFactionList.map((unitArr, index) => {
         return <MultiUnitRow units={unitArr} handleClickAdd={(u) => handleClickAdd(u)} key={unitArr[0].name} />;
       })}

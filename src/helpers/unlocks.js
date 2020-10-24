@@ -99,8 +99,11 @@ const unlockAmounts = {
   },
 };
 
-const calculateUnlocks = (unitsArr) => {
-  console.log('unitsArr', unitsArr);
+const calculateUnallocated = (unitsArr) => {
+  const unallocated = {
+    troopOrIrregular: null,
+    hwmt: null,
+  };
   const unitDetailsArr = unitsArr.map((unit) => unit.unitDetails);
   const troopsAndIrregularUnits = unitDetailsArr.filter((unit) => unit.irregular || unit.size === 'Troop');
   const heroes = unitDetailsArr.filter((unit) => unit.size === 'Hero');
@@ -125,6 +128,7 @@ const calculateUnlocks = (unitsArr) => {
         }
       }
     });
+    if (!hasBeenAllocated) unallocated.troopOrIrregular = true;
   });
 
   heroes.forEach((hero) => {
@@ -148,6 +152,7 @@ const calculateUnlocks = (unitsArr) => {
         }
       });
     }
+    if (!hasBeenAllocated) unallocated.hwmt = true;
   });
 
   warEngines.forEach((monster) => {
@@ -156,14 +161,6 @@ const calculateUnlocks = (unitsArr) => {
       if (!hasBeenAllocated) {
         if (unit.unlocks && unit.unlocks.warEngine) {
           unit.unlocks.warEngine--;
-          hasBeenAllocated = true;
-        }
-      }
-    });
-    unitsWithSlots.forEach((unit) => {
-      if (!hasBeenAllocated) {
-        if (unit.unlocks && unit.unlocks.nonHero) {
-          unit.unlocks.nonHero--;
           hasBeenAllocated = true;
         }
       }
@@ -179,6 +176,15 @@ const calculateUnlocks = (unitsArr) => {
         }
       });
     }
+    unitsWithSlots.forEach((unit) => {
+      if (!hasBeenAllocated) {
+        if (unit.unlocks && unit.unlocks.nonHero) {
+          unit.unlocks.nonHero--;
+          hasBeenAllocated = true;
+        }
+      }
+    });
+    if (!hasBeenAllocated) unallocated.hwmt = true;
   });
 
   monsters.forEach((monster) => {
@@ -191,22 +197,7 @@ const calculateUnlocks = (unitsArr) => {
         }
       }
     });
-    unitsWithSlots.forEach((unit) => {
-      if (!hasBeenAllocated) {
-        if (unit.unlocks && unit.unlocks.nonHero) {
-          unit.unlocks.nonHero--;
-          hasBeenAllocated = true;
-        }
-      }
-    });
-    unitsWithSlots.forEach((unit) => {
-      if (!hasBeenAllocated) {
-        if (unit.unlocks && unit.unlocks.nonWarEngine) {
-          unit.unlocks.nonHero--;
-          hasBeenAllocated = true;
-        }
-      }
-    });
+
     if (!hasBeenAllocated) {
       unitsWithSlots.forEach((unit) => {
         if (!hasBeenAllocated) {
@@ -218,6 +209,15 @@ const calculateUnlocks = (unitsArr) => {
         }
       });
     }
+    unitsWithSlots.forEach((unit) => {
+      if (!hasBeenAllocated) {
+        if (unit.unlocks && (unit.unlocks.nonHero || unit.unlocks.nonWarEngine)) {
+          unit.unlocks.nonHero--;
+          hasBeenAllocated = true;
+        }
+      }
+    });
+    if (!hasBeenAllocated) unallocated.hwmt = true;
   });
 
   titans.forEach((titan) => {
@@ -226,30 +226,6 @@ const calculateUnlocks = (unitsArr) => {
       if (!hasBeenAllocated) {
         if (unit.unlocks && unit.unlocks.monsterOrTitan) {
           unit.unlocks.monsterOrTitan--;
-          hasBeenAllocated = true;
-        }
-      }
-    });
-    unitsWithSlots.forEach((unit) => {
-      if (!hasBeenAllocated) {
-        if (unit.unlocks && unit.unlocks.nonHero) {
-          unit.unlocks.nonHero--;
-          hasBeenAllocated = true;
-        }
-      }
-    });
-    unitsWithSlots.forEach((unit) => {
-      if (!hasBeenAllocated) {
-        if (unit.unlocks && unit.unlocks.nonWarEngine) {
-          unit.unlocks.nonWarEngine--;
-          hasBeenAllocated = true;
-        }
-      }
-    });
-    unitsWithSlots.forEach((unit) => {
-      if (!hasBeenAllocated) {
-        if (unit.unlocks && unit.unlocks.nonMonster) {
-          unit.unlocks.nonMonster--;
           hasBeenAllocated = true;
         }
       }
@@ -265,54 +241,62 @@ const calculateUnlocks = (unitsArr) => {
         }
       });
     }
+    unitsWithSlots.forEach((unit) => {
+      if (!hasBeenAllocated) {
+        if (unit.unlocks && (unit.unlocks.nonHero || unit.unlocks.nonWarEngine || unit.unlocks.nonMonster)) {
+          unit.unlocks.nonHero--;
+          hasBeenAllocated = true;
+        }
+      }
+    });
+    if (!hasBeenAllocated) unallocated.hwmt = true;
   });
 
-  const unlocks = unitsWithSlots.reduce(
-    (unlocksObj, unit) => {
-      unit.unlocks &&
-        Object.keys(unit.unlocks).forEach((unlockLabel) => {
-          switch (unlockLabel) {
-            case 'troopOrIrregular':
-              unlocksObj.troopOrIrregular = unlocksObj.troopOrIrregular || !!unit.unlocks[unlockLabel];
-              break;
-            case 'hero':
-              unlocksObj.hero = unlocksObj.hero || !!unit.unlocks[unlockLabel];
-              break;
-            case 'warEngine':
-              unlocksObj.warEngine = unlocksObj.warEngine || !!unit.unlocks[unlockLabel];
-              break;
-            case 'monster':
-              unlocksObj.monster = unlocksObj.monster || !!unit.unlocks[unlockLabel];
-              break;
-            case 'titan':
-              unlocksObj.titan = unlocksObj.titan || !!unit.unlocks[unlockLabel];
-              break;
-            case 'monsterOrTitan':
-              unlocksObj.monster = unlocksObj.monster || !!unit.unlocks[unlockLabel];
-              unlocksObj.titan = unlocksObj.titan || !!unit.unlocks[unlockLabel];
-              break;
-            case 'heroMonsterTitanOrWarEngineUnique':
-              unlocksObj.hero = unlocksObj.hero || !!unit.unlocks[unlockLabel];
-              unlocksObj.warEngine = unlocksObj.warEngine || !!unit.unlocks[unlockLabel];
-              unlocksObj.monster = unlocksObj.monster || !!unit.unlocks[unlockLabel];
-              unlocksObj.titan = unlocksObj.titan || !!unit.unlocks[unlockLabel];
-              break;
-            default:
-              console.log('in default in unlock switch statement');
-          }
-        });
-      return unlocksObj;
-    },
-    {
-      troopOrIrregular: false,
-      hero: false,
-      warEngine: false,
-      monster: false,
-      titan: false,
-    }
-  );
-  console.log('unlocks', unlocks);
-  return unlocks;
+  // const unlocks = unitsWithSlots.reduce(
+  //   (unlocksObj, unit) => {
+  //     unit.unlocks &&
+  //       Object.keys(unit.unlocks).forEach((unlockLabel) => {
+  //         switch (unlockLabel) {
+  //           case 'troopOrIrregular':
+  //             unlocksObj.troopOrIrregular = unlocksObj.troopOrIrregular || !!unit.unlocks[unlockLabel];
+  //             break;
+  //           case 'hero':
+  //             unlocksObj.hero = unlocksObj.hero || !!unit.unlocks[unlockLabel];
+  //             break;
+  //           case 'warEngine':
+  //             unlocksObj.warEngine = unlocksObj.warEngine || !!unit.unlocks[unlockLabel];
+  //             break;
+  //           case 'monster':
+  //             unlocksObj.monster = unlocksObj.monster || !!unit.unlocks[unlockLabel];
+  //             break;
+  //           case 'titan':
+  //             unlocksObj.titan = unlocksObj.titan || !!unit.unlocks[unlockLabel];
+  //             break;
+  //           case 'monsterOrTitan':
+  //             unlocksObj.monster = unlocksObj.monster || !!unit.unlocks[unlockLabel];
+  //             unlocksObj.titan = unlocksObj.titan || !!unit.unlocks[unlockLabel];
+  //             break;
+  //           case 'heroMonsterTitanOrWarEngineUnique':
+  //             unlocksObj.hero = unlocksObj.hero || !!unit.unlocks[unlockLabel];
+  //             unlocksObj.warEngine = unlocksObj.warEngine || !!unit.unlocks[unlockLabel];
+  //             unlocksObj.monster = unlocksObj.monster || !!unit.unlocks[unlockLabel];
+  //             unlocksObj.titan = unlocksObj.titan || !!unit.unlocks[unlockLabel];
+  //             break;
+  //           default:
+  //             console.log('in default in unlock switch statement');
+  //         }
+  //       });
+  //     return unlocksObj;
+  //   },
+  //   {
+  //     troopOrIrregular: false,
+  //     hero: false,
+  //     warEngine: false,
+  //     monster: false,
+  //     titan: false,
+  //   }
+  // );
+  return unallocated;
 };
 
-export default calculateUnlocks;
+export default calculateUnallocated;

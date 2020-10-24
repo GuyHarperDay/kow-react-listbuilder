@@ -1,7 +1,7 @@
 import React from 'react';
 import Button from 'components/common/Button.js';
 
-const UnitsIndex = ({ units, handleClickAdd }) => {
+const MultiUnitRow = ({ units, handleClickAdd, unlocks }) => {
   return (
     <div className="unit-row">
       <div className="unit-row__head">
@@ -55,4 +55,4 @@ const UnitsIndex = ({ units, handleClickAdd }) => {
   );
 };
 
-export default UnitsIndex;
+export default MultiUnitRow;

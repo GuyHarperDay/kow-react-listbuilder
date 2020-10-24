@@ -5,7 +5,7 @@ import UnitSelect from 'components/views/UnitSelect';
 import ArmyList from 'components/views/ArmyList';
 import { v4 as uuidv4 } from 'uuid';
 import armiesData from '../../data/armies.json';
-import calculateUnlocks from '../../helpers/unlocks';
+import calculateUnallocated from '../../helpers/unlocks';
 
 const ArmiesIndex = () => {
   const [armies, setArmies] = useState([]);
@@ -14,6 +14,7 @@ const ArmiesIndex = () => {
   const [selectedArmy, setSelectedArmy] = useState(null);
   const [selectedUnit, setSelectedUnit] = useState(null);
   const [fromArmyList, setFromArmyList] = useState(null);
+  const [unallocated, setUnallocated] = useState({});
 
   const initialArmyListState = [];
   const [armyListState, dispatch] = useReducer(reducer, initialArmyListState);
@@ -41,17 +42,13 @@ const ArmiesIndex = () => {
       armyName: action.armyName,
     };
     if (armyListIndex === -1) {
-      return [
-        ...armyListState,
-        { name: action.armyName, units: [selectedUnit], unlocks: calculateUnlocks([selectedUnit]) },
-      ];
+      return [...armyListState, { name: action.armyName, units: [selectedUnit] }];
     } else {
       return armyListState.map((army, index) => {
         if (index !== armyListIndex) return army;
         return {
           ...army,
           units: [...army.units, selectedUnit],
-          unlocks: calculateUnlocks([...army.units, selectedUnit]),
         };
       });
     }
@@ -82,7 +79,6 @@ const ArmiesIndex = () => {
       return {
         ...army,
         units: army.units.filter((unit) => unit.unitId !== action.unit.unitId),
-        unlocks: calculateUnlocks(army.units.filter((unit) => unit.unitId !== action.unit.unitId)),
       };
     });
     // if last unit in army section, delete army section
@@ -96,6 +92,13 @@ const ArmiesIndex = () => {
   }
 
   useEffect(init, []);
+  useEffect(() => {
+    const unallocatedObj = armyListState.reduce((unallocatedObj, army) => {
+      unallocatedObj[army.name] = calculateUnallocated(army.units);
+      return unallocatedObj;
+    }, {});
+    setUnallocated(unallocatedObj);
+  }, [armyListState]);
 
   function handleArmyButtonClick(armyName) {
     setSelectedArmy(armyName);
@@ -140,6 +143,7 @@ const ArmiesIndex = () => {
           selectUnit={setSelectedUnit}
           selectArmy={setSelectedArmy}
           fromArmyList={fromArmyList}
+          unallocated={unallocated}
         />
       </main>
     );
