@@ -1,5 +1,5 @@
-import React from 'react';
-import UnitRow from 'components/unit/Unit';
+import React, { useState } from 'react';
+import Unit from 'components/unit/Unit';
 import Button from 'components/common/Button';
 
 const UnitSelect = ({
@@ -8,24 +8,60 @@ const UnitSelect = ({
   goToDisplay,
   handleAddUnitToListWithArmyAndUnit,
   editingUnit,
-  handleEditUnit,
-  handleDeleteUnit,
+  editUnit,
+  deleteUnit,
   deleteConfirm,
 }) => {
-  function handleCancelClick() {
-    goToDisplay(editingUnit ? 'armyList' : 'factionUnitsIndex');
-  }
+  const [enrichedUnit, setEnrichedUnit] = useState(
+    editingUnit && !unit.unitDetails ? { unitDetails: { ...unit }, selectedOptions: [] } : { ...unit }
+  );
 
-  function handleSaveClick() {
-    editingUnit ? handleEditUnit(unit) : handleAddUnitToListWithArmyAndUnit(armyName, unit);
-  }
+  const handleCancelClick = () => {
+    goToDisplay(editingUnit ? 'armyList' : 'factionUnitsIndex');
+  };
+
+  const handleSaveClick = () => {
+    editingUnit ? editUnit(enrichedUnit) : handleAddUnitToListWithArmyAndUnit(armyName, enrichedUnit);
+  };
+
+  const handleSelectOption = (option) => {
+    const previousEnrichedUnit = { ...enrichedUnit };
+    setEnrichedUnit({
+      ...previousEnrichedUnit,
+      selectedOptions: [...previousEnrichedUnit.selectedOptions, option],
+      unitCost:
+        previousEnrichedUnit.unitDetails.cost +
+        [...previousEnrichedUnit.selectedOptions, option].reduce((sum, o) => sum + o.cost, 0),
+    });
+  };
+
+  const handleDeselectOption = (option) => {
+    const previousEnrichedUnit = { ...enrichedUnit };
+    setEnrichedUnit({
+      ...previousEnrichedUnit,
+      selectedOptions: previousEnrichedUnit.selectedOptions.filter(
+        (selectedOption) => selectedOption.name !== option.name
+      ),
+      unitCost:
+        previousEnrichedUnit.unitDetails.cost +
+        previousEnrichedUnit.selectedOptions
+          .filter((selectedOption) => selectedOption.name !== option.name)
+          .reduce((sum, o) => sum + o.cost, 0),
+    });
+  };
 
   const unitDetails = unit.unitDetails ? unit.unitDetails : unit;
 
   if (!deleteConfirm) {
     return (
       <section className="unit-select">
-        <UnitRow unit={unit} displayEditButton={false} view="unitSelect" />
+        <Unit
+          unit={enrichedUnit}
+          displayEditButton={false}
+          view="unitSelect"
+          selectOption={handleSelectOption}
+          deselectOption={handleDeselectOption}
+        />
         <Button text="Save" onClick={handleSaveClick} />
         {editingUnit ? <Button text="Delete" onClick={() => goToDisplay('deleteConfirm')} /> : null}
         <Button text="Cancel" onClick={handleCancelClick} />
@@ -36,7 +72,7 @@ const UnitSelect = ({
       <section className="delete-confirm">
         <p>Delete this unit?</p>
         <p>{unitDetails.name}</p>
-        <Button text="Delete" onClick={() => handleDeleteUnit(unit)} />
+        <Button text="Delete" onClick={() => deleteUnit(unit)} />
         <Button text="Cancel" onClick={() => goToDisplay('unitSelect')} />
       </section>
     );

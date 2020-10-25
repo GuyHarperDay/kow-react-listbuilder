@@ -1,5 +1,5 @@
 import React from 'react';
-import MultiUnitRow from 'components/unit/MultiUnit';
+import MultiUnit from 'components/unit/MultiUnit';
 import Button from 'components/common/Button';
 import UnlocksBanner from 'components/UnlocksBanner';
 
@@ -36,8 +36,8 @@ const FactionUnitsIndex = ({
       <UnlocksBanner armyName={army.name} unallocated={unallocated} />
       {mergedFactionList.map((unitArr, index) => {
         return (
-          <MultiUnitRow
-            units={unitArr}
+          <MultiUnit
+            units={unitArr.map((unit) => ({ unitDetails: { ...unit }, selectedOptions: [] }))}
             handleClickAdd={(u) => handleClickAdd(u)}
             key={unitArr[0].name}
             view={'factionUnitsIndex'}

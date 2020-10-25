@@ -1,19 +1,35 @@
 import React from 'react';
 
-const UnitOptions = ({ unit, view }) => {
-  const unitDetails = unit.unitDetails ? unit.unitDetails : unit;
+const UnitOptions = ({ view, possibleOptions, selectedOptions, selectOption, deselectOption }) => {
+  const handleChange = (option) => {
+    selectedOptions.find((selectedOption) => selectedOption.name === option.name)
+      ? deselectOption(option)
+      : selectOption(option);
+  };
+
+  const isChecked = (option) => {
+    return !!(selectedOptions && selectedOptions.find((selectedOption) => selectedOption.name === option.name));
+  };
 
   return (
     <div className="unit-options">
       {view === 'unitSelect' && (
         <div className="unit-options--select">
           <p>
-            <span className="unit-footer__label">Options: </span>
+            <span className="unit-options__label--select">Options: </span>
           </p>
-          <ul>
-            {unitDetails.options.map((option) => (
+          <ul className="unit-options__list--select">
+            {possibleOptions.map((option, index) => (
               <li key={option.name}>
-                {option.name}: {option.cost}pts
+                <input
+                  type="checkbox"
+                  checked={isChecked(option)}
+                  onChange={() => handleChange(option)}
+                  id={`${option.name}-${index}`}
+                />
+                <label htmlFor={`${option.name}-${index}`}>
+                  {option.name}: {option.cost}pts
+                </label>
               </li>
             ))}
           </ul>
@@ -23,14 +39,13 @@ const UnitOptions = ({ unit, view }) => {
         <div className="unit-options--select">
           <p>
             <span className="unit-footer__label">Options: </span>
-          </p>
-          <ul>
-            {unitDetails.options.map((option) => (
-              <li key={option.name}>
-                {option.name}: {option.cost}pts
-              </li>
+            {selectedOptions.map((option, index) => (
+              <span key={option.name}>
+                {option.name} ({option.cost}pts)
+                {index < selectedOptions.length - 1 ? ', ' : ''}
+              </span>
             ))}
-          </ul>
+          </p>
         </div>
       )}
       {view === 'factionUnitsIndex' && (
@@ -39,7 +54,7 @@ const UnitOptions = ({ unit, view }) => {
             <span className="unit-footer__label">Options: </span>
           </p>
           <ul>
-            {unitDetails.options.map((option) => (
+            {possibleOptions.map((option) => (
               <li key={option.name}>
                 {option.name}: {option.cost}pts
               </li>

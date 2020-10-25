@@ -1,5 +1,5 @@
 import React from 'react';
-import UnitRow from 'components/unit/Unit';
+import Unit from 'components/unit/Unit';
 import Button from 'components/common/Button';
 import UnlocksBanner from 'components/UnlocksBanner';
 
@@ -27,7 +27,7 @@ const ArmyList = ({ armyList, goToDisplay, setFromArmyList, selectUnit, unalloca
             <p>{points[faction.name]} points</p>
             {faction.units.map((unit) => {
               return (
-                <UnitRow
+                <Unit
                   unit={unit}
                   key={unit.unitId}
                   displayEditButton={true}

@@ -24,9 +24,9 @@ const ArmiesIndex = () => {
     const armyListIndex = armyListState.findIndex((armyList) => armyList.name === action.armyName);
     const selectedUnit = {
       unitId: action.unitId,
-      unitDetails: action.unit,
-      selectedUpgrades: [],
-      unitCost: action.unit.cost,
+      unitDetails: action.unit.unitDetails,
+      selectedOptions: action.unit.selectedOptions,
+      unitCost: action.unit.unitCost,
       armyName: action.armyName,
     };
     if (armyListIndex === -1) {
@@ -40,8 +40,7 @@ const ArmiesIndex = () => {
         };
       });
     }
-    // still need to update points values
-    // still need to set limits on number of duplicates
+    // still need to set limits on number of duplicates and living legends
   };
 
   const editUnitDispatchFunction = (armyListState, action) => {
@@ -173,8 +172,8 @@ const ArmiesIndex = () => {
           goToDisplay={setDisplay}
           handleAddUnitToListWithArmyAndUnit={handleAddUnitToListWithArmyAndUnit}
           editingUnit={!!selectedUnit.unitId}
-          handleEditUnit={handleEditUnit}
-          handleDeleteUnit={handleDeleteUnit}
+          editUnit={handleEditUnit}
+          deleteUnit={handleDeleteUnit}
           deleteConfirm={display === 'deleteConfirm'}
         />
       </main>
