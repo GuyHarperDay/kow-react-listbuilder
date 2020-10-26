@@ -1,22 +1,22 @@
 {
   "files": {
-    "main.css": "/kow-react-listbuilder/static/css/main.18131bc8.chunk.css",
-    "main.js": "/kow-react-listbuilder/static/js/main.5abea4d0.chunk.js",
-    "main.js.map": "/kow-react-listbuilder/static/js/main.5abea4d0.chunk.js.map",
+    "main.css": "/kow-react-listbuilder/static/css/main.8f312433.chunk.css",
+    "main.js": "/kow-react-listbuilder/static/js/main.b20e6e6a.chunk.js",
+    "main.js.map": "/kow-react-listbuilder/static/js/main.b20e6e6a.chunk.js.map",
     "runtime-main.js": "/kow-react-listbuilder/static/js/runtime-main.3099e4c2.js",
     "runtime-main.js.map": "/kow-react-listbuilder/static/js/runtime-main.3099e4c2.js.map",
     "static/js/2.14b6a333.chunk.js": "/kow-react-listbuilder/static/js/2.14b6a333.chunk.js",
     "static/js/2.14b6a333.chunk.js.map": "/kow-react-listbuilder/static/js/2.14b6a333.chunk.js.map",
     "index.html": "/kow-react-listbuilder/index.html",
-    "precache-manifest.d3843e8562befc36a253f1c040fa16ba.js": "/kow-react-listbuilder/precache-manifest.d3843e8562befc36a253f1c040fa16ba.js",
+    "precache-manifest.452005ecc17077c250eebd3d46cf7223.js": "/kow-react-listbuilder/precache-manifest.452005ecc17077c250eebd3d46cf7223.js",
     "service-worker.js": "/kow-react-listbuilder/service-worker.js",
-    "static/css/main.18131bc8.chunk.css.map": "/kow-react-listbuilder/static/css/main.18131bc8.chunk.css.map",
+    "static/css/main.8f312433.chunk.css.map": "/kow-react-listbuilder/static/css/main.8f312433.chunk.css.map",
     "static/js/2.14b6a333.chunk.js.LICENSE.txt": "/kow-react-listbuilder/static/js/2.14b6a333.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.3099e4c2.js",
     "static/js/2.14b6a333.chunk.js",
-    "static/css/main.18131bc8.chunk.css",
-    "static/js/main.5abea4d0.chunk.js"
+    "static/css/main.8f312433.chunk.css",
+    "static/js/main.b20e6e6a.chunk.js"
   ]
 }
