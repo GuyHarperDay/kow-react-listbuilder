@@ -4,7 +4,16 @@ import Button from 'components/common/Button';
 import UnlocksBanner from 'components/UnlocksBanner';
 import DuplicatesBanner from 'components/DuplicatesBanner';
 
-const ArmyList = ({ armyList, goToDisplay, setFromArmyList, selectUnit, unallocated, points, tooManyDuplicates }) => {
+const ArmyList = ({
+  armyList,
+  goToDisplay,
+  setFromArmyList,
+  selectUnit,
+  unallocated,
+  points,
+  tooManyDuplicates,
+  overLimits,
+}) => {
   // The list the user has been building
 
   function handleAddUnitClick() {
@@ -23,7 +32,7 @@ const ArmyList = ({ armyList, goToDisplay, setFromArmyList, selectUnit, unalloca
       {armyList.map((faction) => (
         <UnlocksBanner key={faction.name} armyName={faction.name} unallocated={unallocated} />
       ))}
-      <DuplicatesBanner tooManyDuplicates={tooManyDuplicates} />
+      <DuplicatesBanner tooManyDuplicates={tooManyDuplicates} overLimits={overLimits} />
       {armyList.map((faction) => {
         return (
           <div key={faction.name}>

@@ -8,6 +8,7 @@ import armiesData from '../../data/armies.json';
 import calculateUnallocated from '../../helpers/unlocks';
 import calculatePointsTotal from '../../helpers/points';
 import calculateDuplicates from '../../helpers/duplicates';
+import calculateUnitLimits from '../../helpers/limits';
 
 const ArmiesIndex = () => {
   const [armies, setArmies] = useState([]);
@@ -19,6 +20,7 @@ const ArmiesIndex = () => {
   const [unallocated, setUnallocated] = useState({});
   const [points, setPoints] = useState({});
   const [tooManyDuplicates, setTooManyDuplicates] = useState(null);
+  const [overLimits, setOverLimits] = useState(null);
 
   const initialArmyListState = [];
 
@@ -42,7 +44,7 @@ const ArmiesIndex = () => {
         };
       });
     }
-    // still need to set limits on number of duplicates and living legends
+    // still need to set limits on number of living legends and living legend upgrades
   };
 
   const editUnitDispatchFunction = (armyListState, action) => {
@@ -124,7 +126,14 @@ const ArmiesIndex = () => {
       }, [])
     );
     setTooManyDuplicates(isTooManyDuplicates);
-    console.log('isTooManyDuplicates', isTooManyDuplicates);
+  };
+
+  const processLimits = () => {
+    const flattenedUnits = armyListState.reduce((unitsArr, army) => {
+      return [...unitsArr, ...army.units];
+    }, []);
+    const overLimits = calculateUnitLimits(flattenedUnits);
+    setOverLimits(overLimits);
   };
 
   useEffect(init, []);
@@ -132,6 +141,7 @@ const ArmiesIndex = () => {
     processUnlocks();
     processPoints();
     processDuplicates();
+    processLimits();
     if (armyListState.length) setDisplay('armyList');
   }, [armyListState]);
 
@@ -204,6 +214,7 @@ const ArmiesIndex = () => {
           unallocated={unallocated}
           points={points}
           tooManyDuplicates={tooManyDuplicates}
+          overLimits={overLimits}
         />
       </main>
     );
