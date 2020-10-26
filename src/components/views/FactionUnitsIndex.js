@@ -24,7 +24,13 @@ const FactionUnitsIndex = ({ army, goToDisplay, selectUnit, selectArmy, fromArmy
     }
   });
 
-  const [filteredMergedUnits, setFilteredMergedUnits] = useState([...mergedFactionList]);
+  const [filteredMergedUnits, setFilteredMergedUnits] = useState(
+    [...mergedFactionList].filter(
+      (unitArr) =>
+        ['Infantry', 'Heavy Infantry'].includes(unitArr[0].type) &&
+        !['Hero', 'War Engine', 'Monster', 'Titan'].includes(unitArr[0].size)
+    )
+  );
 
   const handleDisplayOtherArmy = () => {
     goToDisplay('armiesIndex');
