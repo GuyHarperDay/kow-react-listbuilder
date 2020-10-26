@@ -1,4 +1,3 @@
--artefacts
 -get rid of select other army
 -styling
 -print view

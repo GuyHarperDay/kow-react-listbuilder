@@ -21,6 +21,7 @@ const UnitSelect = ({
 
   const handleCancelClick = () => {
     goToDisplay(editingUnit ? 'armyList' : 'factionUnitsIndex');
+    window.scrollTo(0, 0);
   };
 
   const handleSaveClick = () => {
@@ -72,6 +73,16 @@ const UnitSelect = ({
 
   const unitDetails = unit.unitDetails ? unit.unitDetails : unit;
 
+  const handleGoToDeleteConfirm = () => {
+    goToDisplay('deleteConfirm');
+    window.scrollTo(0, 0);
+  };
+
+  const handleGoToUnitSelect = () => {
+    goToDisplay('unitSelect');
+    window.scrollTo(0, 0);
+  };
+
   if (!deleteConfirm) {
     return (
       <section className="unit-select">
@@ -85,7 +96,7 @@ const UnitSelect = ({
           availableArtefacts={availableArtefacts}
         />
         <Button text="Save" onClick={handleSaveClick} variant="success" />
-        {editingUnit ? <Button text="Delete" onClick={() => goToDisplay('deleteConfirm')} variant="danger" /> : null}
+        {editingUnit ? <Button text="Delete" onClick={handleGoToDeleteConfirm} variant="danger" /> : null}
         <Button text="Cancel" onClick={handleCancelClick} variant="warning" />
       </section>
     );
@@ -95,7 +106,7 @@ const UnitSelect = ({
         <p className="h6">Delete this unit?</p>
         <p className="h5">{unitDetails.name}</p>
         <Button text="Delete" onClick={() => deleteUnit(unit)} variant="danger" />
-        <Button text="Cancel" onClick={() => goToDisplay('unitSelect')} variant="warning" />
+        <Button text="Cancel" onClick={handleGoToUnitSelect} variant="warning" />
       </section>
     );
   }

@@ -19,12 +19,14 @@ const ArmyList = ({
 
   function handleAddUnitClick() {
     goToDisplay('factionUnitsIndex');
+    window.scrollTo(0, 0);
     setFromArmyList(true);
   }
 
   function handleEditUnitClick(unit) {
     selectUnit(unit);
     goToDisplay('unitSelect');
+    window.scrollTo(0, 0);
     setFromArmyList(true);
   }
 

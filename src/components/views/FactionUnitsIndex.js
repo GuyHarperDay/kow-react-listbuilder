@@ -18,6 +18,7 @@ const FactionUnitsIndex = ({
     selectUnit(unit);
     selectArmy(army.name);
     goToDisplay('unitSelect');
+    window.scrollTo(0, 0);
   }
 
   const mergedFactionList = [];
@@ -30,9 +31,14 @@ const FactionUnitsIndex = ({
     }
   });
 
+  const handleDisplayOtherArmy = () => {
+    goToDisplay('armiesIndex');
+    window.scrollTo(0, 0);
+  };
+
   return (
     <section className="units-index">
-      {displaySelectOtherArmy && <Button text="Select other army" onClick={() => goToDisplay('armiesIndex')} />}
+      {displaySelectOtherArmy && <Button text="Select other army" onClick={handleDisplayOtherArmy} />}
       {mergedFactionList.map((unitArr, index) => {
         return (
           <MultiUnit

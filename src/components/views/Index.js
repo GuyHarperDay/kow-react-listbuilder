@@ -79,6 +79,7 @@ const Index = () => {
       setFromArmyList(false);
       setSelectedArmy(null);
       setDisplay('armiesIndex');
+      window.scrollTo(0, 0);
     }
     return newArmylistState.filter((army) => army.units.length !== 0);
   };
@@ -101,6 +102,7 @@ const Index = () => {
     setIsLoaded(true);
     setArmies(armiesData);
     setDisplay('armiesIndex');
+    window.scrollTo(0, 0);
   };
 
   const processUnlocks = () => {
@@ -155,12 +157,16 @@ const Index = () => {
     processDuplicates();
     processArtefacts();
     processLimits();
-    if (armyListState.length) setDisplay('armyList');
+    if (armyListState.length) {
+      setDisplay('armyList');
+      window.scrollTo(0, 0);
+    }
   }, [armyListState]);
 
   const handleArmyButtonClick = (armyName) => {
     setSelectedArmy(armyName);
     setDisplay('factionUnitsIndex');
+    window.scrollTo(0, 0);
   };
 
   const handleAddUnitToListWithArmyAndUnit = (armyName, unit) => {
