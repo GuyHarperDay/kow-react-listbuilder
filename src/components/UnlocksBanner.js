@@ -1,7 +1,7 @@
 import React from 'react';
 import Banner from 'components/common/Banner';
 
-const WarningBanner = ({ armyName = null, unallocated = {}, tooManyDuplicates = null }) => {
+const UnlocksBanner = ({ armyName = null, unallocated = {} }) => {
   const tooManyHWMT = unallocated[armyName] && unallocated[armyName].hwmt;
   const tooManyTroopsOrIrregular = unallocated[armyName] && unallocated[armyName].troopOrIrregular;
 
@@ -13,11 +13,8 @@ const WarningBanner = ({ armyName = null, unallocated = {}, tooManyDuplicates = 
       {tooManyTroopsOrIrregular && (
         <Banner text="Not enough unlocks for the amount of Troops or Irregular Units in your list" />
       )}
-      {tooManyDuplicates && (
-        <Banner text="Too many Heroes/War Engines/Monsters/Titans of the same type for the current points total" />
-      )}
     </div>
   );
 };
 
-export default WarningBanner;
+export default UnlocksBanner;

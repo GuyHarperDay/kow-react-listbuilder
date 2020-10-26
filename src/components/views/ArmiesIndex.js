@@ -18,7 +18,7 @@ const ArmiesIndex = () => {
   const [fromArmyList, setFromArmyList] = useState(null);
   const [unallocated, setUnallocated] = useState({});
   const [points, setPoints] = useState({});
-  const [tooManyDuplicates, setTooManyDuplicates] = useState({});
+  const [tooManyDuplicates, setTooManyDuplicates] = useState(null);
 
   const initialArmyListState = [];
 
@@ -114,19 +114,25 @@ const ArmiesIndex = () => {
   };
 
   const processDuplicates = () => {
+    const pointsTotal = Object.keys(points).reduce((sum, key) => {
+      return (sum += points[key]);
+    }, 0);
     const isTooManyDuplicates = calculateDuplicates(
-      points,
+      pointsTotal,
       armyListState.reduce((flattenedUnits, army) => {
         return [...flattenedUnits, ...army.units];
       }, [])
     );
     setTooManyDuplicates(isTooManyDuplicates);
+    console.log('isTooManyDuplicates', isTooManyDuplicates);
   };
 
   useEffect(init, []);
   useEffect(() => {
     processUnlocks();
     processPoints();
+    processDuplicates();
+    if (armyListState.length) setDisplay('armyList');
   }, [armyListState]);
 
   const handleArmyButtonClick = (armyName) => {
@@ -136,17 +142,14 @@ const ArmiesIndex = () => {
 
   const handleAddUnitToListWithArmyAndUnit = (armyName, unit) => {
     dispatch({ type: 'addUnitToList', armyName, unit, unitId: uuidv4() });
-    setDisplay('armyList');
   };
 
   const handleEditUnit = (unit) => {
     dispatch({ type: 'editUnit', unit });
-    setDisplay('armyList');
   };
 
   const handleDeleteUnit = (unit) => {
     dispatch({ type: 'deleteUnit', unit });
-    setDisplay('armyList');
   };
 
   if (!isLoaded) {

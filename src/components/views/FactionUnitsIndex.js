@@ -1,7 +1,6 @@
 import React from 'react';
 import MultiUnit from 'components/unit/MultiUnit';
 import Button from 'components/common/Button';
-import WarningBanner from 'components/WarningBanner';
 
 const FactionUnitsIndex = ({
   army,
@@ -34,7 +33,6 @@ const FactionUnitsIndex = ({
   return (
     <section className="units-index">
       {displaySelectOtherArmy && <Button text="Select other army" onClick={() => goToDisplay('armiesIndex')} />}
-      <WarningBanner armyName={army.name} unallocated={unallocated} tooManyDuplicates={tooManyDuplicates} />
       {mergedFactionList.map((unitArr, index) => {
         return (
           <MultiUnit
