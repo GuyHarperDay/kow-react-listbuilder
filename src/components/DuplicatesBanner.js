@@ -7,7 +7,9 @@ const DuplicatesAndLimitsBanner = ({ tooManyDuplicates = null, overLimits = null
       {tooManyDuplicates && (
         <Banner text="Too many Heroes/War Engines/Monsters/Titans of the same type for the current points total" />
       )}
-      {overLimits && <Banner text="You are over your limit on one or more living legend units" />}
+      {overLimits && (
+        <Banner text="You are over your limit on one or more living legend units, or units with the same living legend upgrade" />
+      )}
     </div>
   );
 };

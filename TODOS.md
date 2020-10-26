@@ -1,4 +1,3 @@
--living legends validation
 -living legend upgrades validation
 -artefacts
 -faq 1.1 updates
