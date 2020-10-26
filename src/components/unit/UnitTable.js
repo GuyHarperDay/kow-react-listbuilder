@@ -1,21 +1,43 @@
 import React from 'react';
 import UnitTableRow from './UnitTableRow';
+import Table from 'react-bootstrap/Table';
 
 const UnitTable = ({ units, displayAddButton = false, addUnit = false }) => {
   return (
-    <table className="unit-table">
+    <Table className="unit-table">
       <tbody>
         <tr>
-          <th>Unit size</th>
-          <th>Sp</th>
-          <th>Me</th>
-          <th>Ra</th>
-          <th>De</th>
-          <th>H</th>
-          <th>US</th>
-          <th>Att</th>
-          <th>Ne</th>
-          <th>Pts</th>
+          <th>
+            <p>Unit size</p>
+          </th>
+          <th>
+            <p>Sp</p>
+          </th>
+          <th>
+            <p>Me</p>
+          </th>
+          <th>
+            <p>Ra</p>
+          </th>
+          <th>
+            <p>De</p>
+          </th>
+          <th>
+            <p>H</p>
+          </th>
+          <th>
+            <p>US</p>
+          </th>
+          <th>
+            <p>Att</p>
+          </th>
+          <th>
+            <p>Ne</p>
+          </th>
+          <th>
+            <p>Pts</p>
+          </th>
+          <th></th>
         </tr>
         {units.map((unit) => (
           <UnitTableRow
@@ -26,7 +48,7 @@ const UnitTable = ({ units, displayAddButton = false, addUnit = false }) => {
           />
         ))}
       </tbody>
-    </table>
+    </Table>
   );
 };
 

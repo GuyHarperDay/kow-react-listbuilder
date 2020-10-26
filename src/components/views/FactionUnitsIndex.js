@@ -43,7 +43,7 @@ const FactionUnitsIndex = ({
           />
         );
       })}
-      <Button text="Cancel" onClick={() => goToDisplay(fromArmyList ? 'armyList' : 'armiesIndex')} />
+      <Button text="Cancel" onClick={() => goToDisplay(fromArmyList ? 'armyList' : 'armiesIndex')} variant="warning" />
     </section>
   );
 };

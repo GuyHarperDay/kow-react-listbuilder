@@ -1,10 +1,11 @@
 import React from 'react';
+import Alert from 'react-bootstrap/Alert';
 
 const Banner = ({ text }) => {
   return (
-    <div>
+    <Alert variant="danger" className="banner">
       <p>{text}</p>
-    </div>
+    </Alert>
   );
 };
 

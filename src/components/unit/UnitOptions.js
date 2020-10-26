@@ -1,4 +1,6 @@
 import React from 'react';
+import ToggleButton from 'react-bootstrap/ToggleButton';
+import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup';
 
 const UnitOptions = ({ view, possibleOptions, selectedOptions, selectOption, deselectOption }) => {
   const handleChange = (option) => {
@@ -21,12 +23,18 @@ const UnitOptions = ({ view, possibleOptions, selectedOptions, selectOption, des
           <ul className="unit-options__list--select">
             {possibleOptions.map((option, index) => (
               <li key={option.name}>
-                <input
-                  type="checkbox"
-                  checked={isChecked(option)}
-                  onChange={() => handleChange(option)}
-                  id={`${option.name}-${index}`}
-                />
+                <ToggleButtonGroup type="checkbox">
+                  <ToggleButton
+                    className="unit-options__toggle"
+                    checked={isChecked(option)}
+                    onChange={() => handleChange(option)}
+                    id={`${option.name}-${index}`}
+                    variant={isChecked(option) ? 'success' : 'outline-success'}
+                    size="sm"
+                  >
+                    {isChecked(option) ? 'Selected' : 'Not selected'}
+                  </ToggleButton>
+                </ToggleButtonGroup>
                 <label htmlFor={`${option.name}-${index}`}>
                   {option.name}: {option.cost}pts
                 </label>

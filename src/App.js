@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import ArmiesIndex from 'components/views/ArmiesIndex';
+import ArmiesIndex from 'components/views/Index';
 
 const App = () => {
   return <ArmiesIndex />;

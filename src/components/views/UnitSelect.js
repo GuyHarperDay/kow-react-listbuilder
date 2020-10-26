@@ -64,18 +64,18 @@ const UnitSelect = ({
           selectOption={handleSelectOption}
           deselectOption={handleDeselectOption}
         />
-        <Button text="Save" onClick={handleSaveClick} />
-        {editingUnit ? <Button text="Delete" onClick={() => goToDisplay('deleteConfirm')} /> : null}
-        <Button text="Cancel" onClick={handleCancelClick} />
+        <Button text="Save" onClick={handleSaveClick} variant="success" />
+        {editingUnit ? <Button text="Delete" onClick={() => goToDisplay('deleteConfirm')} variant="danger" /> : null}
+        <Button text="Cancel" onClick={handleCancelClick} variant="warning" />
       </section>
     );
   } else {
     return (
       <section className="delete-confirm">
-        <p>Delete this unit?</p>
-        <p>{unitDetails.name}</p>
-        <Button text="Delete" onClick={() => deleteUnit(unit)} />
-        <Button text="Cancel" onClick={() => goToDisplay('unitSelect')} />
+        <p className="h6">Delete this unit?</p>
+        <p className="h5">{unitDetails.name}</p>
+        <Button text="Delete" onClick={() => deleteUnit(unit)} variant="danger" />
+        <Button text="Cancel" onClick={() => goToDisplay('unitSelect')} variant="warning" />
       </section>
     );
   }

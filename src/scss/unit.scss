@@ -1,0 +1,52 @@
+.multi-unit-row,
+.unit-row {
+  margin-bottom: 2rem;
+}
+
+.unit-header {
+  padding: 0 0.5rem;
+  margin-bottom: 0.25rem;
+  &__unit-name-container {
+    display: flex;
+    align-items: flex-end;
+  }
+  &__unit-name {
+    @extend .h5;
+    margin-bottom: 0;
+    display: inline-block;
+    margin-right: 1rem;
+  }
+  &__unit-type-container {
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+  }
+  &__unit-type {
+    @extend .h6;
+    text-align: right;
+    margin-bottom: 0;
+  }
+}
+
+.unit-footer {
+  padding-left: 0.5rem;
+
+  .unit-options {
+    &__list--select {
+      list-style-type: none;
+      padding-left: 1rem;
+      li {
+        display: flex;
+        align-items: center;
+        margin-bottom: 0.25rem;
+        label {
+          margin-bottom: 0;
+        }
+      }
+    }
+    &__toggle {
+      width: 7rem;
+      margin-right: 0.5rem;
+    }
+  }
+}

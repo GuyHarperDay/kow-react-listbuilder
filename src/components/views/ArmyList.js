@@ -36,8 +36,10 @@ const ArmyList = ({
       {armyList.map((faction) => {
         return (
           <div key={faction.name}>
-            <h2 className="army-list__section-heading">{faction.name}</h2>
-            <p>{points[faction.name]} points</p>
+            <div className="army-list__header">
+              <h2 className="army-list__section-heading">{faction.name}</h2>
+              <p className="army-list__points">{points[faction.name]} points</p>
+            </div>
             {faction.units.map((unit) => {
               return (
                 <Unit
@@ -52,7 +54,7 @@ const ArmyList = ({
           </div>
         );
       })}
-      <Button text="Add another unit" onClick={handleAddUnitClick} />
+      <Button text="Add another unit" onClick={handleAddUnitClick} variant="success" />
     </section>
   );
 };

@@ -1,10 +1,11 @@
 import React from 'react';
+import BootstrapButton from 'react-bootstrap/Button';
 
-const Button = ({ text, onClick, disabled }) => {
+const Button = ({ text, onClick, disabled, variant, size }) => {
   return (
-    <button onClick={onClick} disabled={disabled}>
+    <BootstrapButton onClick={onClick} disabled={disabled} variant={variant} size={size}>
       {text}
-    </button>
+    </BootstrapButton>
   );
 };
 
