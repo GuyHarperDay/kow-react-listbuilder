@@ -113,7 +113,7 @@ const calculateUnallocated = (unitsArr) => {
 
   const unitsWithSlots = unitDetailsArr.map((unit) => {
     if (unlockAmounts[unit.type] && unlockAmounts[unit.type][unit.size]) {
-      return { ...unit, unlocks: unlockAmounts[unit.type] && unlockAmounts[unit.type][unit.size] };
+      return { ...unit, unlocks: { ...(unlockAmounts[unit.type] && unlockAmounts[unit.type][unit.size]) } };
     }
     return unit;
   });

@@ -1,9 +1,9 @@
 import React from 'react';
 import Unit from 'components/unit/Unit';
 import Button from 'components/common/Button';
-import UnlocksBanner from 'components/UnlocksBanner';
+import WarningBanner from 'components/WarningBanner';
 
-const ArmyList = ({ armyList, goToDisplay, setFromArmyList, selectUnit, unallocated, points }) => {
+const ArmyList = ({ armyList, goToDisplay, setFromArmyList, selectUnit, unallocated, points, tooManyDuplicates }) => {
   // The list the user has been building
 
   function handleAddUnitClick() {
@@ -22,7 +22,7 @@ const ArmyList = ({ armyList, goToDisplay, setFromArmyList, selectUnit, unalloca
       {armyList.map((faction) => {
         return (
           <div key={faction.name}>
-            <UnlocksBanner armyName={faction.name} unallocated={unallocated} />
+            <WarningBanner armyName={faction.name} unallocated={unallocated} tooManyDuplicates={tooManyDuplicates} />
             <h2 className="army-list__section-heading">{faction.name}</h2>
             <p>{points[faction.name]} points</p>
             {faction.units.map((unit) => {

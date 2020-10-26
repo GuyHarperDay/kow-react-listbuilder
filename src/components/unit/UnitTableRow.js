@@ -1,7 +1,7 @@
 import React from 'react';
 import Button from '../common/Button';
 
-const UnitTableRow = ({ unit, displayAddButton = false, handleClickAdd = false }) => {
+const UnitTableRow = ({ unit, displayAddButton = false, addUnit = false }) => {
   const unitDetails = unit.unitDetails ? unit.unitDetails : unit;
 
   return (
@@ -18,7 +18,7 @@ const UnitTableRow = ({ unit, displayAddButton = false, handleClickAdd = false }
       <td>{unitDetails.cost}</td>
       {displayAddButton && (
         <td>
-          <Button text="Add" onClick={() => handleClickAdd(unit)} />
+          <Button text="Add" onClick={() => addUnit(unit)} />
         </td>
       )}
     </tr>

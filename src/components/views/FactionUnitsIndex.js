@@ -1,7 +1,7 @@
 import React from 'react';
 import MultiUnit from 'components/unit/MultiUnit';
 import Button from 'components/common/Button';
-import UnlocksBanner from 'components/UnlocksBanner';
+import WarningBanner from 'components/WarningBanner';
 
 const FactionUnitsIndex = ({
   army,
@@ -11,6 +11,7 @@ const FactionUnitsIndex = ({
   fromArmyList,
   unallocated,
   displaySelectOtherArmy,
+  tooManyDuplicates,
 }) => {
   // All the units in the selected faction
 
@@ -33,12 +34,12 @@ const FactionUnitsIndex = ({
   return (
     <section className="units-index">
       {displaySelectOtherArmy && <Button text="Select other army" onClick={() => goToDisplay('armiesIndex')} />}
-      <UnlocksBanner armyName={army.name} unallocated={unallocated} />
+      <WarningBanner armyName={army.name} unallocated={unallocated} tooManyDuplicates={tooManyDuplicates} />
       {mergedFactionList.map((unitArr, index) => {
         return (
           <MultiUnit
-            units={unitArr.map((unit) => ({ unitDetails: { ...unit }, selectedOptions: [] }))}
-            handleClickAdd={(u) => handleClickAdd(u)}
+            units={unitArr.map((unit) => ({ unitDetails: { ...unit }, selectedOptions: [], unitCost: unit.cost }))}
+            addUnit={handleClickAdd}
             key={unitArr[0].name}
             view={'factionUnitsIndex'}
           />

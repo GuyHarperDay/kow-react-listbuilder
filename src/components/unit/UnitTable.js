@@ -1,7 +1,7 @@
 import React from 'react';
 import UnitTableRow from './UnitTableRow';
 
-const UnitTable = ({ units, displayAddButton = false, handleClickAdd = false }) => {
+const UnitTable = ({ units, displayAddButton = false, addUnit = false }) => {
   return (
     <table className="unit-table">
       <tbody>
@@ -22,7 +22,7 @@ const UnitTable = ({ units, displayAddButton = false, handleClickAdd = false }) 
             key={unit.unitDetails ? `${unit.unitDetails.name}-${unit.unitDetails.size}` : `${unit.name}-${unit.size}`}
             unit={unit}
             displayAddButton={displayAddButton}
-            handleClickAdd={handleClickAdd}
+            addUnit={addUnit}
           />
         ))}
       </tbody>

@@ -13,7 +13,9 @@ const UnitSelect = ({
   deleteConfirm,
 }) => {
   const [enrichedUnit, setEnrichedUnit] = useState(
-    editingUnit && !unit.unitDetails ? { unitDetails: { ...unit }, selectedOptions: [] } : { ...unit }
+    editingUnit && !unit.unitDetails
+      ? { unitDetails: { ...unit }, selectedOptions: [], unitCost: unit.cost }
+      : { ...unit }
   );
 
   const handleCancelClick = () => {

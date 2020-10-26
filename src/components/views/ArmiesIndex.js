@@ -7,6 +7,7 @@ import { v4 as uuidv4 } from 'uuid';
 import armiesData from '../../data/armies.json';
 import calculateUnallocated from '../../helpers/unlocks';
 import calculatePointsTotal from '../../helpers/points';
+import calculateDuplicates from '../../helpers/duplicates';
 
 const ArmiesIndex = () => {
   const [armies, setArmies] = useState([]);
@@ -17,6 +18,7 @@ const ArmiesIndex = () => {
   const [fromArmyList, setFromArmyList] = useState(null);
   const [unallocated, setUnallocated] = useState({});
   const [points, setPoints] = useState({});
+  const [tooManyDuplicates, setTooManyDuplicates] = useState({});
 
   const initialArmyListState = [];
 
@@ -55,22 +57,24 @@ const ArmiesIndex = () => {
         }),
       };
     });
-    // still need to update points values
   };
 
   const deleteUnitDispatchFunction = (armyListState, action) => {
-    console.log('deleting unit');
-    console.log('action in deleteDispatch - ', action);
     const armyListIndex = armyListState.findIndex((armyList) => armyList.name === action.unit.armyName);
-    return armyListState.map((army, index) => {
+    const newArmylistState = armyListState.map((army, index) => {
       if (index !== armyListIndex) return army;
       return {
         ...army,
         units: army.units.filter((unit) => unit.unitId !== action.unit.unitId),
       };
     });
-    // if last unit in army section, delete army section
-    // if last unit in list, setFromArmyList to false
+    const emptyArmy = newArmylistState.find((army) => army.units.length === 0);
+    if (emptyArmy && selectedArmy === emptyArmy.name) {
+      setFromArmyList(false);
+      setSelectedArmy(null);
+      setDisplay('armiesIndex');
+    }
+    return newArmylistState.filter((army) => army.units.length !== 0);
   };
 
   const reducer = (armyListState, action) => {
@@ -109,6 +113,16 @@ const ArmiesIndex = () => {
     setPoints(points);
   };
 
+  const processDuplicates = () => {
+    const isTooManyDuplicates = calculateDuplicates(
+      points,
+      armyListState.reduce((flattenedUnits, army) => {
+        return [...flattenedUnits, ...army.units];
+      }, [])
+    );
+    setTooManyDuplicates(isTooManyDuplicates);
+  };
+
   useEffect(init, []);
   useEffect(() => {
     processUnlocks();
@@ -123,19 +137,16 @@ const ArmiesIndex = () => {
   const handleAddUnitToListWithArmyAndUnit = (armyName, unit) => {
     dispatch({ type: 'addUnitToList', armyName, unit, unitId: uuidv4() });
     setDisplay('armyList');
-    // then go to army list display
   };
 
   const handleEditUnit = (unit) => {
     dispatch({ type: 'editUnit', unit });
     setDisplay('armyList');
-    // fix: cancel after only clicking on one unit and not saving it
   };
 
   const handleDeleteUnit = (unit) => {
     dispatch({ type: 'deleteUnit', unit });
     setDisplay('armyList');
-    // setDisplay to armyList or armiesIndex
   };
 
   if (!isLoaded) {
@@ -160,6 +171,7 @@ const ArmiesIndex = () => {
           fromArmyList={fromArmyList}
           unallocated={unallocated}
           displaySelectOtherArmy={!!armyListState.length}
+          tooManyDuplicates={tooManyDuplicates}
         />
       </main>
     );
@@ -188,6 +200,7 @@ const ArmiesIndex = () => {
           selectUnit={setSelectedUnit}
           unallocated={unallocated}
           points={points}
+          tooManyDuplicates={tooManyDuplicates}
         />
       </main>
     );
