@@ -14,7 +14,10 @@ const UnitHeader = ({ unit, displayEditButton = false, handleClickEdit = false }
         {displayEditButton && <Button text="Edit" onClick={() => handleClickEdit(unit)} size="sm" />}
       </Col>
       <Col className="unit-header__unit-type-container">
-        <p className="unit-header__unit-type">{unitDescription}</p>
+        <p className="unit-header__unit-type">
+          <span className="badge badge-secondary">{unitDescription}</span>
+          {unit.unitCost && ` ${unit.unitCost}pts`}
+        </p>
       </Col>
     </Row>
   );

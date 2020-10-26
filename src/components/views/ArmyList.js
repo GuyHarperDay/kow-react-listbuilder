@@ -13,6 +13,7 @@ const ArmyList = ({
   points,
   tooManyDuplicates,
   overLimits,
+  artefactDuplicates,
 }) => {
   // The list the user has been building
 
@@ -32,7 +33,11 @@ const ArmyList = ({
       {armyList.map((faction) => (
         <UnlocksBanner key={faction.name} armyName={faction.name} unallocated={unallocated} />
       ))}
-      <DuplicatesBanner tooManyDuplicates={tooManyDuplicates} overLimits={overLimits} />
+      <DuplicatesBanner
+        tooManyDuplicates={tooManyDuplicates}
+        overLimits={overLimits}
+        artefactDuplicates={artefactDuplicates}
+      />
       {armyList.map((faction) => {
         return (
           <div key={faction.name}>

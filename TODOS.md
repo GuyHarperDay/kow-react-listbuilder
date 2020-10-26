@@ -1,7 +1,9 @@
 -artefacts
+-get rid of select other army
 -styling
 -print view
+-tabs
 -faq 1.1 updates
 -new living legends for halpi's rift
--halpi's rift cok updates
+-halpi's rift cok updates (units and artefacts)
 -halpi's rift listbuilder

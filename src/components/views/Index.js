@@ -5,9 +5,11 @@ import ArmyList from 'components/views/ArmyList';
 import ArmiesIndex from 'components/views/ArmiesIndex';
 import { v4 as uuidv4 } from 'uuid';
 import armiesData from '../../data/armies.json';
+import artefacts from '../../data/artefacts.json';
 import calculateUnallocated from '../../helpers/unlocks';
 import calculatePointsTotal from '../../helpers/points';
 import calculateDuplicates from '../../helpers/duplicates';
+import calculateDuplicateArtefacts from '../../helpers/artefacts';
 import calculateUnitLimits from '../../helpers/limits';
 
 const Index = () => {
@@ -21,6 +23,7 @@ const Index = () => {
   const [points, setPoints] = useState({});
   const [tooManyDuplicates, setTooManyDuplicates] = useState(null);
   const [overLimits, setOverLimits] = useState(null);
+  const [artefactDuplicates, setArtefactDuplicates] = useState(null);
 
   const initialArmyListState = [];
 
@@ -30,6 +33,7 @@ const Index = () => {
       unitId: action.unitId,
       unitDetails: action.unit.unitDetails,
       selectedOptions: action.unit.selectedOptions,
+      selectedArtefacts: action.unit.selectedArtefacts,
       unitCost: action.unit.unitCost,
       armyName: action.armyName,
     };
@@ -54,7 +58,7 @@ const Index = () => {
       return {
         ...army,
         units: army.units.map((unit) => {
-          if (unit.id !== action.unit.id) return unit;
+          if (unit.unitId !== action.unit.unitId) return unit;
           return action.unit;
         }),
       };
@@ -136,11 +140,20 @@ const Index = () => {
     setOverLimits(overLimits);
   };
 
+  const processArtefacts = () => {
+    const flattenedUnits = armyListState.reduce((unitsArr, army) => {
+      return [...unitsArr, ...army.units];
+    }, []);
+    const overLimit = calculateDuplicateArtefacts(flattenedUnits);
+    setArtefactDuplicates(overLimit);
+  };
+
   useEffect(init, []);
   useEffect(() => {
     processUnlocks();
     processPoints();
     processDuplicates();
+    processArtefacts();
     processLimits();
     if (armyListState.length) setDisplay('armyList');
   }, [armyListState]);
@@ -193,6 +206,7 @@ const Index = () => {
           editUnit={handleEditUnit}
           deleteUnit={handleDeleteUnit}
           deleteConfirm={display === 'deleteConfirm'}
+          availableArtefacts={artefacts}
         />
       </main>
     );
@@ -207,6 +221,7 @@ const Index = () => {
           unallocated={unallocated}
           points={points}
           tooManyDuplicates={tooManyDuplicates}
+          artefactDuplicates={artefactDuplicates}
           overLimits={overLimits}
         />
       </main>

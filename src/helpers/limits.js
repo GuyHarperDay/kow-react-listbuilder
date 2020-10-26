@@ -1,7 +1,6 @@
 const calculateUnitLimits = (units) => {
   return units.reduce((overLimit, unit) => {
     const limitedOption = unit.selectedOptions.find((option) => option.limit);
-    if (limitedOption) debugger;
     return (
       overLimit ||
       (unit.unitDetails.limit &&

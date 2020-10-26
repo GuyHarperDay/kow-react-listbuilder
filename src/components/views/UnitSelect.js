@@ -11,10 +11,11 @@ const UnitSelect = ({
   editUnit,
   deleteUnit,
   deleteConfirm,
+  availableArtefacts,
 }) => {
   const [enrichedUnit, setEnrichedUnit] = useState(
     editingUnit && !unit.unitDetails
-      ? { unitDetails: { ...unit }, selectedOptions: [], unitCost: unit.cost }
+      ? { unitDetails: { ...unit }, selectedOptions: [], unitCost: unit.cost, selectedArtefacts: [] }
       : { ...unit }
   );
 
@@ -52,6 +53,23 @@ const UnitSelect = ({
     });
   };
 
+  const handleSelectArtefact = (artefact, index) => {
+    const previousEnrichedUnit = { ...enrichedUnit };
+    console.log('in handleSelectArtefact - previousEnrichedUnit: ', previousEnrichedUnit);
+    if (!artefact) {
+      previousEnrichedUnit.selectedArtefacts.splice(index);
+    } else {
+      previousEnrichedUnit.selectedArtefacts[index] = artefact;
+    }
+    setEnrichedUnit({
+      ...previousEnrichedUnit,
+      unitCost:
+        previousEnrichedUnit.unitDetails.cost +
+        previousEnrichedUnit.selectedOptions.reduce((sum, o) => sum + o.cost, 0) +
+        [...previousEnrichedUnit.selectedArtefacts].reduce((sum, a) => sum + a.cost, 0),
+    });
+  };
+
   const unitDetails = unit.unitDetails ? unit.unitDetails : unit;
 
   if (!deleteConfirm) {
@@ -63,6 +81,8 @@ const UnitSelect = ({
           view="unitSelect"
           selectOption={handleSelectOption}
           deselectOption={handleDeselectOption}
+          selectArtefact={handleSelectArtefact}
+          availableArtefacts={availableArtefacts}
         />
         <Button text="Save" onClick={handleSaveClick} variant="success" />
         {editingUnit ? <Button text="Delete" onClick={() => goToDisplay('deleteConfirm')} variant="danger" /> : null}

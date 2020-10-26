@@ -36,7 +36,12 @@ const FactionUnitsIndex = ({
       {mergedFactionList.map((unitArr, index) => {
         return (
           <MultiUnit
-            units={unitArr.map((unit) => ({ unitDetails: { ...unit }, selectedOptions: [], unitCost: unit.cost }))}
+            units={unitArr.map((unit) => ({
+              unitDetails: { ...unit },
+              selectedOptions: [],
+              unitCost: unit.cost,
+              selectedArtefacts: [],
+            }))}
             addUnit={handleClickAdd}
             key={unitArr[0].name}
             view={'factionUnitsIndex'}

@@ -32,7 +32,7 @@ const UnitOptions = ({ view, possibleOptions, selectedOptions, selectOption, des
                     variant={isChecked(option) ? 'success' : 'outline-success'}
                     size="sm"
                   >
-                    {isChecked(option) ? 'Selected' : 'Not selected'}
+                    {isChecked(option) ? 'Deselect' : 'Select'}
                   </ToggleButton>
                 </ToggleButtonGroup>
                 <label htmlFor={`${option.name}-${index}`}>

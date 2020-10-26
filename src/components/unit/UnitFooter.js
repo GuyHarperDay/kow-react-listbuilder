@@ -1,7 +1,8 @@
 import React from 'react';
 import UnitOptions from './UnitOptions';
+import UnitArtefacts from './UnitArtefacts';
 
-const UnitFooter = ({ unit, view, selectOption, deselectOption }) => {
+const UnitFooter = ({ unit, view, selectOption, deselectOption, selectArtefact, availableArtefacts }) => {
   return (
     <div className="unit-footer">
       <div className="unit-footer__special">
@@ -34,6 +35,19 @@ const UnitFooter = ({ unit, view, selectOption, deselectOption }) => {
             deselectOption={deselectOption}
           />
         ) : null}
+        {view === 'armyList' && unit.selectedArtefacts.length ? (
+          <UnitArtefacts selectedArtefacts={unit.selectedArtefacts} view={view} />
+        ) : null}
+        {view === 'unitSelect' && !['Monster', 'War Engine', 'Titan'].includes(unit.unitDetails.size) && (
+          <UnitArtefacts
+            artefactsLimit={1}
+            availableArtefacts={availableArtefacts}
+            selectedArtefacts={unit.selectedArtefacts}
+            view={view}
+            selectArtefact={selectArtefact}
+            sizeModifier={unit.unitDetails.size}
+          />
+        )}
       </div>
     </div>
   );
