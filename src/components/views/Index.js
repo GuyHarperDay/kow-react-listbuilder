@@ -181,6 +181,11 @@ const Index = () => {
     dispatch({ type: 'deleteUnit', unit });
   };
 
+  const handleGoToDisplay = (display) => {
+    setDisplay(display);
+    window.scrollTo(0, 0);
+  };
+
   if (!isLoaded) {
     return <div>Loading...</div>;
   } else if (display === 'armiesIndex') {
@@ -190,7 +195,7 @@ const Index = () => {
       <main>
         <FactionUnitsIndex
           army={armies.find((army) => army.name === selectedArmy)}
-          goToDisplay={setDisplay}
+          goToDisplay={handleGoToDisplay}
           selectUnit={setSelectedUnit}
           selectArmy={setSelectedArmy}
           fromArmyList={fromArmyList}
@@ -206,7 +211,7 @@ const Index = () => {
         <UnitSelect
           armyName={selectedArmy}
           unit={selectedUnit}
-          goToDisplay={setDisplay}
+          goToDisplay={handleGoToDisplay}
           handleAddUnitToListWithArmyAndUnit={handleAddUnitToListWithArmyAndUnit}
           editingUnit={!!selectedUnit.unitId}
           editUnit={handleEditUnit}
