@@ -195,7 +195,7 @@ const Index = () => {
           selectArmy={setSelectedArmy}
           fromArmyList={fromArmyList}
           unallocated={unallocated}
-          displaySelectOtherArmy={!!armyListState.length}
+          displaySelectOtherArmy={!armyListState.length}
           tooManyDuplicates={tooManyDuplicates}
         />
       </main>

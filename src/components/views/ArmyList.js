@@ -17,18 +17,18 @@ const ArmyList = ({
 }) => {
   // The list the user has been building
 
-  function handleAddUnitClick() {
+  const handleAddUnitClick = () => {
     goToDisplay('factionUnitsIndex');
     window.scrollTo(0, 0);
     setFromArmyList(true);
-  }
+  };
 
-  function handleEditUnitClick(unit) {
+  const handleEditUnitClick = (unit) => {
     selectUnit(unit);
     goToDisplay('unitSelect');
     window.scrollTo(0, 0);
     setFromArmyList(true);
-  }
+  };
 
   return (
     <section className="army-list">
