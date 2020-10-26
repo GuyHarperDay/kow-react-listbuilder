@@ -226,7 +226,7 @@ const Index = () => {
       <main>
         <ArmyList
           armyList={armyListState}
-          goToDisplay={setDisplay}
+          goToDisplay={handleGoToDisplay}
           setFromArmyList={setFromArmyList}
           selectUnit={setSelectedUnit}
           unallocated={unallocated}
