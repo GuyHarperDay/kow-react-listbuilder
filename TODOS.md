@@ -1,4 +1,3 @@
--Points cost for artefacts with options
 -styling:
 --Select/deselect background. Replace with cost?
 --Style unit header better on mobile

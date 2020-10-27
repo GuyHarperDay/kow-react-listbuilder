@@ -25,19 +25,17 @@ const UnitOptions = ({ view, possibleOptions, selectedOptions, selectOption, des
               <li key={option.name}>
                 <ToggleButtonGroup type="checkbox">
                   <ToggleButton
-                    className="unit-options__toggle"
+                    className={`unit-options__toggle${isChecked(option) ? '--selected' : ''}`}
                     checked={isChecked(option)}
                     onChange={() => handleChange(option)}
                     id={`${option.name}-${index}`}
                     variant={isChecked(option) ? 'success' : 'outline-success'}
                     size="sm"
                   >
-                    {isChecked(option) ? 'Deselect' : 'Select'}
+                    {option.cost}pts
                   </ToggleButton>
                 </ToggleButtonGroup>
-                <label htmlFor={`${option.name}-${index}`}>
-                  {option.name}: {option.cost}pts
-                </label>
+                <label htmlFor={`${option.name}-${index}`}>{option.name}</label>
               </li>
             ))}
           </ul>

@@ -33,20 +33,29 @@
 
   .unit-options {
     &__list--select {
+      margin-top: 0.25rem;
       list-style-type: none;
       padding-left: 1rem;
       li {
         display: flex;
         align-items: center;
-        margin-bottom: 0.25rem;
+        margin-bottom: 0.4rem;
         label {
           margin-bottom: 0;
         }
       }
     }
     &__toggle {
-      width: 7rem;
+      width: 4rem;
       margin-right: 0.5rem;
+      &:hover {
+        background-color: #fafafa;
+        color: $success;
+      }
+      &--selected {
+        width: 4rem;
+        margin-right: 0.5rem;
+      }
     }
   }
 }
