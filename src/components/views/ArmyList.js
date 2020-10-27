@@ -1,6 +1,7 @@
 import React from 'react';
 import Unit from 'components/unit/Unit';
 import Button from 'components/common/Button';
+import ButtonRow from 'components/common/ButtonRow';
 import UnlocksBanner from 'components/UnlocksBanner';
 import DuplicatesBanner from 'components/DuplicatesBanner';
 
@@ -61,7 +62,9 @@ const ArmyList = ({
           </div>
         );
       })}
-      <Button text="Add another unit" onClick={handleAddUnitClick} variant="success" />
+      <ButtonRow sticky={true}>
+        <Button text="Add another unit" onClick={handleAddUnitClick} variant="success" />
+      </ButtonRow>
     </section>
   );
 };

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Unit from 'components/unit/Unit';
 import Button from 'components/common/Button';
+import ButtonRow from 'components/common/ButtonRow';
 
 const UnitSelect = ({
   unit,
@@ -95,18 +96,24 @@ const UnitSelect = ({
           selectArtefact={handleSelectArtefact}
           availableArtefacts={availableArtefacts}
         />
-        <Button text="Save" onClick={handleSaveClick} variant="success" />
-        {editingUnit ? <Button text="Delete" onClick={handleGoToDeleteConfirm} variant="danger" /> : null}
-        <Button text="Cancel" onClick={handleCancelClick} variant="warning" />
+        <ButtonRow sticky={true}>
+          <Button text="Save" onClick={handleSaveClick} variant="success" />
+          {editingUnit ? <Button text="Delete" onClick={handleGoToDeleteConfirm} variant="danger" /> : null}
+          <Button text="Cancel" onClick={handleCancelClick} variant="warning" />
+        </ButtonRow>
       </section>
     );
   } else {
     return (
       <section className="delete-confirm">
-        <p className="h6">Delete this unit?</p>
-        <p className="h5">{unitDetails.name}</p>
-        <Button text="Delete" onClick={() => deleteUnit(unit)} variant="danger" />
-        <Button text="Cancel" onClick={handleGoToUnitSelect} variant="warning" />
+        <div className="delete-confirm__container">
+          <p className="h6">Delete this unit?</p>
+          <p className="h5">{unitDetails.name}</p>
+        </div>
+        <ButtonRow sticky={true}>
+          <Button text="Delete" onClick={() => deleteUnit(unit)} variant="danger" />
+          <Button text="Cancel" onClick={handleGoToUnitSelect} variant="warning" />
+        </ButtonRow>
       </section>
     );
   }

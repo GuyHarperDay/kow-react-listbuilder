@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import MultiUnit from 'components/unit/MultiUnit';
 import Button from 'components/common/Button';
+import ButtonRow from 'components/common/ButtonRow';
 import Tabs from 'react-bootstrap/Tabs';
 import Tab from 'react-bootstrap/Tab';
 
@@ -40,9 +41,9 @@ const FactionUnitsIndex = ({ army, goToDisplay, selectUnit, selectArmy, fromArmy
   const handleSelectTab = (label) => {
     console.log('label', label);
     const typesDict = {
-      'Inf/Hv Inf': ['Infantry', 'Heavy Infantry'],
-      'Cav/Cht': ['Cavalry', 'Chariot'],
-      'Lg Inf/Mon Inf/Lg Cav': ['Large Infantry', 'Monstrous Infantry', 'Large Cavalry'],
+      'Inf/HI': ['Infantry', 'Heavy Infantry'],
+      'Cav/Cht/LC': ['Cavalry', 'Chariot', 'Large Cavalry'],
+      'Sw/LI/MI': ['Swarm', 'Large Infantry', 'Monstrous Infantry'],
     };
     const sizesDict = {
       Hero: ['Hero'],
@@ -64,9 +65,13 @@ const FactionUnitsIndex = ({ army, goToDisplay, selectUnit, selectArmy, fromArmy
 
   return (
     <section className="units-index">
-      {displaySelectOtherArmy && <Button text="Select other army" onClick={handleDisplayOtherArmy} />}
-      <Tabs className="units-index__tabs" onSelect={handleSelectTab} variant="tabs" defaultActiveKey="Inf/Hv Inf">
-        {['Inf/Hv Inf', 'Cav/Cht', 'Lg Inf/Mon Inf/Lg Cav', 'Hero', 'War Eng', 'Mon/Titan'].map((unitType) => {
+      {displaySelectOtherArmy && (
+        <ButtonRow sticky={false}>
+          <Button text="Select other army" onClick={handleDisplayOtherArmy} />
+        </ButtonRow>
+      )}
+      <Tabs className="units-index__tabs" onSelect={handleSelectTab} variant="tabs" defaultActiveKey="Inf/HI">
+        {['Inf/HI', 'Cav/Cht/LC', 'Sw/LI/MI', 'Hero', 'War Eng', 'Mon/Titan'].map((unitType) => {
           return (
             <Tab className="units-index__tab" eventKey={unitType} title={unitType}>
               {filteredMergedUnits.length ? (
@@ -93,7 +98,13 @@ const FactionUnitsIndex = ({ army, goToDisplay, selectUnit, selectArmy, fromArmy
           );
         })}
       </Tabs>
-      <Button text="Cancel" onClick={() => goToDisplay(fromArmyList ? 'armyList' : 'armiesIndex')} variant="warning" />
+      <ButtonRow sticky={true}>
+        <Button
+          text="Cancel"
+          onClick={() => goToDisplay(fromArmyList ? 'armyList' : 'armiesIndex')}
+          variant="warning"
+        />
+      </ButtonRow>
     </section>
   );
 };
