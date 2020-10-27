@@ -36,7 +36,8 @@ const UnitSelect = ({
       selectedOptions: [...previousEnrichedUnit.selectedOptions, option],
       unitCost:
         previousEnrichedUnit.unitDetails.cost +
-        [...previousEnrichedUnit.selectedOptions, option].reduce((sum, o) => sum + o.cost, 0),
+        [...previousEnrichedUnit.selectedOptions, option].reduce((sum, o) => sum + o.cost, 0) +
+        [...previousEnrichedUnit.selectedArtefacts].reduce((sum, a) => sum + a.cost, 0),
     });
   };
 
@@ -51,13 +52,13 @@ const UnitSelect = ({
         previousEnrichedUnit.unitDetails.cost +
         previousEnrichedUnit.selectedOptions
           .filter((selectedOption) => selectedOption.name !== option.name)
-          .reduce((sum, o) => sum + o.cost, 0),
+          .reduce((sum, o) => sum + o.cost, 0) +
+        [...previousEnrichedUnit.selectedArtefacts].reduce((sum, a) => sum + a.cost, 0),
     });
   };
 
   const handleSelectArtefact = (artefact, index) => {
     const previousEnrichedUnit = { ...enrichedUnit };
-    console.log('in handleSelectArtefact - previousEnrichedUnit: ', previousEnrichedUnit);
     if (!artefact) {
       previousEnrichedUnit.selectedArtefacts.splice(index);
     } else {

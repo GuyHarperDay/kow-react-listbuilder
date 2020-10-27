@@ -1,10 +1,9 @@
-Select/deselect background. Replace with cost?
-Points cost for artefacts with options
-Swarms / other unit types??
+-Points cost for artefacts with options
 -styling:
---max-width
+--Select/deselect background. Replace with cost?
 --Style unit header better on mobile
---Sticky buttons on mobile
+--full width 768 with margins
+--buttons on landing page
 -scroll on edit
 -Order by unit type for print
 -Scrolling up on mobile when you get to the end
