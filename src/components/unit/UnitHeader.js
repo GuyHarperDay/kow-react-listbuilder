@@ -8,11 +8,11 @@ const UnitHeader = ({ unit, displayEditButton = false, handleClickEdit = false }
   const unitDescription = unitDetails.size === 'Hero' ? `Hero (${unitDetails.type})` : unitDetails.type;
 
   return (
-    <Row className="unit-header">
-      <Col className="unit-header__unit-name-container">
+    <Row className="unit-header" noGutters>
+      <div className="unit-header__unit-name-container">
         <p className="unit-header__unit-name">{unitDetails.name}</p>
         {displayEditButton && <Button text="Edit" onClick={() => handleClickEdit(unit)} size="sm" />}
-      </Col>
+      </div>
       <Col className="unit-header__unit-type-container">
         <p className="unit-header__unit-type">
           <span className="badge badge-secondary">{unitDescription}</span>

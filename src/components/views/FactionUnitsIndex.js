@@ -73,7 +73,7 @@ const FactionUnitsIndex = ({ army, goToDisplay, selectUnit, selectArmy, fromArmy
       <Tabs className="units-index__tabs" onSelect={handleSelectTab} variant="tabs" defaultActiveKey="Inf/HI">
         {['Inf/HI', 'Cav/Cht/LC', 'Sw/LI/MI', 'Hero', 'WE', 'Mon/Tit'].map((unitType) => {
           return (
-            <Tab className="units-index__tab" eventKey={unitType} title={unitType}>
+            <Tab className="units-index__tab" eventKey={unitType} title={unitType} key={unitType}>
               {filteredMergedUnits.length ? (
                 filteredMergedUnits.map((unitArr, index) => {
                   return (

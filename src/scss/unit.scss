@@ -6,6 +6,8 @@
 .unit-header {
   padding: 0 0.5rem;
   margin-bottom: 0.25rem;
+  display: flex;
+  align-items: space-between;
   &__unit-name-container {
     display: flex;
     align-items: flex-end;
@@ -14,7 +16,10 @@
     @extend .h5;
     margin-bottom: 0;
     display: inline-block;
-    margin-right: 1rem;
+    margin-right: 0.5rem;
+    @include media-breakpoint-down(xs) {
+      font-size: 1.2rem;
+    }
   }
   &__unit-type-container {
     display: flex;
