@@ -1,31 +1,39 @@
 import React from 'react';
 import Button from 'components/common/Button';
-import ButtonGroup from 'react-bootstrap/ButtonGroup';
+import ButtonRow from 'components/common/ButtonRow';
 
 const ArmiesIndex = ({ armies, handleArmyButtonClick }) => {
+  const filterAndChunk = (filterString) => {
+    const filteredArmies = armies.filter((army) => army.alignment === filterString);
+    const arrayOfArmyArrays = [];
+    filteredArmies.forEach((army, i) => {
+      if (i % 3 === 0) {
+        arrayOfArmyArrays.push([army]);
+      } else {
+        arrayOfArmyArrays[arrayOfArmyArrays.length - 1].push(army);
+      }
+    });
+    return arrayOfArmyArrays;
+  };
   return (
-    <main>
-      <div className="d-flex">
-        {armies
-          .filter((army) => army.alignment === 'Good')
-          .map((army, i) => (
-            <Button text={army.name} onClick={() => handleArmyButtonClick(army.name)} key={i} variant="success" />
-          ))}
-      </div>
-      <div className="d-flex">
-        {armies
-          .filter((army) => army.alignment === 'Neutral')
-          .map((army, i) => (
-            <Button text={army.name} onClick={() => handleArmyButtonClick(army.name)} key={i} variant="warning" />
-          ))}
-      </div>
-      <div className="d-flex">
-        {armies
-          .filter((army) => army.alignment === 'Evil')
-          .map((army, i) => (
-            <Button text={army.name} onClick={() => handleArmyButtonClick(army.name)} key={i} variant="danger" />
-          ))}
-      </div>
+    <main className="armies-index">
+      {['Good', 'Neutral', 'Evil']
+        .map((alignmentString) => filterAndChunk(alignmentString))
+        .flat()
+        .map((armyArr, i) => {
+          return (
+            <ButtonRow className="armies-index__button-row" key={i}>
+              {armyArr.map((army) => (
+                <Button
+                  text={army.name}
+                  onClick={() => handleArmyButtonClick(army.name)}
+                  key={army.name}
+                  variant={{ Good: 'success', Neutral: 'warning', Evil: 'danger' }[army.alignment]}
+                />
+              ))}
+            </ButtonRow>
+          );
+        })}
     </main>
   );
 };

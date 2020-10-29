@@ -47,8 +47,8 @@ const FactionUnitsIndex = ({ army, goToDisplay, selectUnit, selectArmy, fromArmy
     };
     const sizesDict = {
       Hero: ['Hero'],
-      'War Eng': ['War Engine'],
-      'Mon/Titan': ['Monster', 'Titan'],
+      WE: ['War Engine'],
+      'Mon/Tit': ['Monster', 'Titan'],
     };
     const filteredUnits = [...mergedFactionList].filter((unitArr) => {
       if (typesDict[label]) {
@@ -71,7 +71,7 @@ const FactionUnitsIndex = ({ army, goToDisplay, selectUnit, selectArmy, fromArmy
         </ButtonRow>
       )}
       <Tabs className="units-index__tabs" onSelect={handleSelectTab} variant="tabs" defaultActiveKey="Inf/HI">
-        {['Inf/HI', 'Cav/Cht/LC', 'Sw/LI/MI', 'Hero', 'War Eng', 'Mon/Titan'].map((unitType) => {
+        {['Inf/HI', 'Cav/Cht/LC', 'Sw/LI/MI', 'Hero', 'WE', 'Mon/Tit'].map((unitType) => {
           return (
             <Tab className="units-index__tab" eventKey={unitType} title={unitType}>
               {filteredMergedUnits.length ? (

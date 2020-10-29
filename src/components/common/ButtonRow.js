@@ -9,9 +9,9 @@ const ButtonRow = ({ children, sticky }) => {
   return (
     <Container className={`button-row__container${sticky ? '--sticky' : ''}`}>
       <Row className="button-row__row" noGutters={true}>
-        {childButtons.map((childButton) => {
+        {childButtons.map((childButton, i) => {
           return (
-            <Col xs={true} lg={false} className="button-row__column">
+            <Col xs={true} lg={false} className="button-row__column" key={i}>
               {childButton}
             </Col>
           );
