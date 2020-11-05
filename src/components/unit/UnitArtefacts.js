@@ -24,7 +24,12 @@ const UnitArtefacts = ({ view, availableArtefacts, selectArtefact, selectedArtef
             {filteredArtefacts
               .sort((a, b) => a.cost[sizeModifier] - b.cost[sizeModifier])
               .map((artefact) => (
-                <Dropdown.Item key={artefact.name} eventKey={artefact.name} as="button">
+                <Dropdown.Item
+                  key={artefact.name}
+                  eventKey={artefact.name}
+                  as="button"
+                  className="unit-artefacts__dropdown-item"
+                >
                   {artefact.name} ({artefact.cost[sizeModifier]}pts)
                 </Dropdown.Item>
               ))}

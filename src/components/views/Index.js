@@ -11,8 +11,9 @@ import calculatePointsTotal from '../../helpers/points';
 import calculateDuplicates from '../../helpers/duplicates';
 import calculateDuplicateArtefacts from '../../helpers/artefacts';
 import calculateUnitLimits from '../../helpers/limits';
+import { Link } from 'react-router-dom';
 
-const Index = () => {
+const Index = ({ halpi = false }) => {
   const [armies, setArmies] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
   const [display, setDisplay] = useState('armiesIndex');
@@ -189,7 +190,18 @@ const Index = () => {
   if (!isLoaded) {
     return <div>Loading...</div>;
   } else if (display === 'armiesIndex') {
-    return <ArmiesIndex armies={armies} handleArmyButtonClick={handleArmyButtonClick} />;
+    return (
+      <main>
+        <header>
+          <p className="switch-view">
+            This listbuilder contains units available in Kings of War v3 rules, including FAQs up to 1.1 and Clash of
+            Kings 2021. For Halpi's Rift campaign listbuilding,{' '}
+            <Link to="/kow-react-listbuilder/halpis-rift">click here</Link>
+          </p>
+        </header>
+        <ArmiesIndex armies={armies} handleArmyButtonClick={handleArmyButtonClick} />
+      </main>
+    );
   } else if (display === 'factionUnitsIndex') {
     return (
       <main>

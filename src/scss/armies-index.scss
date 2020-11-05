@@ -1,0 +1,6 @@
+.switch-view {
+  padding: 0 40px;
+  @include media-breakpoint-down(xs) {
+    padding: 0 15px;
+  }
+}

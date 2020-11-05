@@ -1,6 +1,14 @@
 .unit-select {
   margin-top: 2rem;
 }
+
+.unit-artefacts__dropdown.show.dropdown {
+  .unit-artefacts__dropdown-item {
+    &:last-child {
+      margin-bottom: 38px;
+    }
+  }
+}
 .delete-confirm {
   &__container {
     width: 100%;
