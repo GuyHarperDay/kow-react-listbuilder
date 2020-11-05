@@ -10,6 +10,9 @@ const UnitOptions = ({ view, possibleOptions, selectedOptions, selectOption, des
   };
 
   const isChecked = (option) => {
+    console.log('isChecked being called');
+    console.log('selectedOptions', selectedOptions);
+    console.log(!!(selectedOptions && selectedOptions.find((selectedOption) => selectedOption.name === option.name)));
     return !!(selectedOptions && selectedOptions.find((selectedOption) => selectedOption.name === option.name));
   };
 
@@ -23,11 +26,9 @@ const UnitOptions = ({ view, possibleOptions, selectedOptions, selectOption, des
           <ul className="unit-options__list--select">
             {possibleOptions.map((option, index) => (
               <li key={option.name}>
-                <ToggleButtonGroup type="checkbox">
+                <ToggleButtonGroup type="checkbox" onChange={() => handleChange(option)} value={isChecked(option)}>
                   <ToggleButton
                     className={`unit-options__toggle${isChecked(option) ? '--selected' : ''}`}
-                    checked={isChecked(option)}
-                    onChange={() => handleChange(option)}
                     id={`${option.name}-${index}`}
                     variant={isChecked(option) ? 'success' : 'outline-success'}
                     size="sm"

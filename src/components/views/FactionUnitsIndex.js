@@ -39,7 +39,6 @@ const FactionUnitsIndex = ({ army, goToDisplay, selectUnit, selectArmy, fromArmy
   };
 
   const handleSelectTab = (label) => {
-    console.log('label', label);
     const typesDict = {
       'Inf/HI': ['Infantry', 'Heavy Infantry'],
       'Cav/Cht/LC': ['Cavalry', 'Chariot', 'Large Cavalry'],

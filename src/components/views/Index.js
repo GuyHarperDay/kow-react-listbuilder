@@ -3,20 +3,24 @@ import FactionUnitsIndex from 'components/views/FactionUnitsIndex';
 import UnitSelect from 'components/views/UnitSelect';
 import ArmyList from 'components/views/ArmyList';
 import ArmiesIndex from 'components/views/ArmiesIndex';
+import PlanesIndex from 'components/views/PlanesIndex';
 import { v4 as uuidv4 } from 'uuid';
 import armiesData from '../../data/armies.json';
+import halpiPlanesData from '../../data/halpi-planes.json';
 import artefacts from '../../data/artefacts.json';
 import calculateUnallocated from '../../helpers/unlocks';
 import calculatePointsTotal from '../../helpers/points';
 import calculateDuplicates from '../../helpers/duplicates';
 import calculateDuplicateArtefacts from '../../helpers/artefacts';
+import { enrichArmyDataForHalpisRift } from '../../helpers/parse-halpi';
 import calculateUnitLimits from '../../helpers/limits';
 import { Link } from 'react-router-dom';
 
-const Index = ({ halpi = false }) => {
+const Index = ({ type = 'standard' }) => {
   const [armies, setArmies] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
-  const [display, setDisplay] = useState('armiesIndex');
+  const [display, setDisplay] = useState(type === 'halpi' ? 'planesIndex' : 'armiesIndex');
+  const [selectedPlane, setSelectedPlane] = useState(null);
   const [selectedArmy, setSelectedArmy] = useState(null);
   const [selectedUnit, setSelectedUnit] = useState(null);
   const [fromArmyList, setFromArmyList] = useState(null);
@@ -102,7 +106,6 @@ const Index = ({ halpi = false }) => {
   const init = () => {
     setIsLoaded(true);
     setArmies(armiesData);
-    setDisplay('armiesIndex');
     window.scrollTo(0, 0);
   };
 
@@ -187,19 +190,53 @@ const Index = ({ halpi = false }) => {
     window.scrollTo(0, 0);
   };
 
+  const handlePlaneButtonClick = (planeName) => {
+    setSelectedPlane(planeName);
+    setArmies(
+      enrichArmyDataForHalpisRift(armiesData, halpiPlanesData.find((plane) => plane.name === planeName).spells)
+    );
+    setDisplay('armiesIndex');
+    window.scrollTo(0, 0);
+  };
+
   if (!isLoaded) {
     return <div>Loading...</div>;
-  } else if (display === 'armiesIndex') {
+  } else if (display === 'planesIndex') {
     return (
       <main>
         <header>
           <p className="switch-view">
-            This listbuilder contains units available in Kings of War v3 rules, including FAQs up to 1.1 and Clash of
-            Kings 2021. For Halpi's Rift campaign listbuilding,{' '}
-            <Link to="/kow-react-listbuilder/halpis-rift">click here</Link>
+            This listbuilder contains units available in the Halpi's Rift campaign, including FAQs up to 1.1 and Clash
+            of Kings 2021. For standard KOW v3 listbuilding, <Link to="/kow-react-listbuilder">click here</Link>
           </p>
         </header>
-        <ArmiesIndex armies={armies} handleArmyButtonClick={handleArmyButtonClick} />
+        <PlanesIndex handlePlaneButtonClick={handlePlaneButtonClick} planes={halpiPlanesData} />
+      </main>
+    );
+  } else if (display === 'armiesIndex') {
+    return (
+      <main>
+        <header>
+          {type === 'halpi' && (
+            <p className="switch-view">
+              This listbuilder contains units available in the Halpi's Rift campaign, including FAQs up to 1.1 and Clash
+              of Kings 2021. For standard KOW v3 listbuilding, <Link to="/kow-react-listbuilder">click here</Link>
+            </p>
+          )}
+          {type === 'standard' && (
+            <p className="switch-view">
+              This listbuilder contains units available in Kings of War v3 rules, including FAQs up to 1.1 and Clash of
+              Kings 2021. For Halpi's Rift campaign listbuilding,{' '}
+              <Link to="/kow-react-listbuilder/halpis-rift">click here</Link>
+            </p>
+          )}
+        </header>
+        <ArmiesIndex
+          armies={armies}
+          handleArmyButtonClick={handleArmyButtonClick}
+          halpi={type === 'halpi'}
+          goToDisplay={handleGoToDisplay}
+        />
       </main>
     );
   } else if (display === 'factionUnitsIndex') {

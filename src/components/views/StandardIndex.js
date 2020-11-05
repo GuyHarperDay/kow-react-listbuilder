@@ -1,12 +1,12 @@
 import React, { Fragment } from 'react';
 import Index from './Index';
 
-const HalpisRiftIndex = () => {
+const StandardIndex = () => {
   return (
     <Fragment>
-      <Index type="halpi" />
+      <Index type="standard" />
     </Fragment>
   );
 };
 
-export default HalpisRiftIndex;
+export default StandardIndex;
