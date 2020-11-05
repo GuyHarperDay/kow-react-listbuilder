@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import UnitOptions from './UnitOptions';
 import UnitArtefacts from './UnitArtefacts';
+import { PlaneContext } from '../../contexts/PlaneContextProvider';
 
 const UnitFooter = ({ unit, view, selectOption, deselectOption, selectArtefact, availableArtefacts }) => {
+  const selectedPlane = useContext(PlaneContext);
   return (
     <div className="unit-footer">
       <div className="unit-footer__special">

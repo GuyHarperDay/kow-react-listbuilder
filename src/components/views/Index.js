@@ -4,6 +4,7 @@ import UnitSelect from 'components/views/UnitSelect';
 import ArmyList from 'components/views/ArmyList';
 import ArmiesIndex from 'components/views/ArmiesIndex';
 import PlanesIndex from 'components/views/PlanesIndex';
+import { PlaneContextProvider } from 'contexts/PlaneContextProvider';
 import { v4 as uuidv4 } from 'uuid';
 import armiesData from '../../data/armies.json';
 import halpiPlanesData from '../../data/halpi-planes.json';
@@ -257,17 +258,19 @@ const Index = ({ type = 'standard' }) => {
   } else if (display === 'unitSelect' || display === 'deleteConfirm') {
     return (
       <main>
-        <UnitSelect
-          armyName={selectedArmy}
-          unit={selectedUnit}
-          goToDisplay={handleGoToDisplay}
-          handleAddUnitToListWithArmyAndUnit={handleAddUnitToListWithArmyAndUnit}
-          editingUnit={!!selectedUnit.unitId}
-          editUnit={handleEditUnit}
-          deleteUnit={handleDeleteUnit}
-          deleteConfirm={display === 'deleteConfirm'}
-          availableArtefacts={artefacts}
-        />
+        <PlaneContextProvider selectedPlane={halpiPlanesData.find((plane) => plane.name === selectedPlane)}>
+          <UnitSelect
+            armyName={selectedArmy}
+            unit={selectedUnit}
+            goToDisplay={handleGoToDisplay}
+            handleAddUnitToListWithArmyAndUnit={handleAddUnitToListWithArmyAndUnit}
+            editingUnit={!!selectedUnit.unitId}
+            editUnit={handleEditUnit}
+            deleteUnit={handleDeleteUnit}
+            deleteConfirm={display === 'deleteConfirm'}
+            availableArtefacts={artefacts}
+          />
+        </PlaneContextProvider>
       </main>
     );
   } else if (display === 'armyList') {

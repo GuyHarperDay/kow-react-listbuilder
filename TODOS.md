@@ -5,5 +5,4 @@
 -new living legends for halpi's rift
 -halpi's rift cok updates (units and artefacts)
 -halpi's rift listbuilder
--deselect saved option bug
 -implement limit on limited spell with different n value
