@@ -4,5 +4,5 @@
 -faq 1.1 updates
 -new living legends for halpi's rift
 -halpi's rift cok updates (units and artefacts)
--halpi's rift listbuilder
+-halpi's rift listbuilder - remember multiple artefacts index - search for selectArtefact
 -implement limit on limited spell with different n value

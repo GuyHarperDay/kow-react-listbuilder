@@ -2,12 +2,42 @@ import React, { useContext } from 'react';
 import UnitOptions from './UnitOptions';
 import UnitArtefacts from './UnitArtefacts';
 import { PlaneContext } from '../../contexts/PlaneContextProvider';
+import { calculateAvailablePlaneSpells } from '../../helpers/parse-halpi';
 
 const UnitFooter = ({ unit, view, selectOption, deselectOption, selectArtefact, availableArtefacts }) => {
   const selectedPlane = useContext(PlaneContext);
 
   const enrichedAvailableArtefacts =
     availableArtefacts && selectedPlane ? [...availableArtefacts, ...selectedPlane.artefacts] : availableArtefacts;
+
+  const pointyWizardsHatSpells =
+    selectedPlane &&
+    [...calculateAvailablePlaneSpells(selectedPlane.spells, unit.unitDetails.spellcaster + 1)].filter(
+      (spell) => !unit.unitDetails.options.find((allocatedSpell) => allocatedSpell.name === spell.name)
+    );
+
+  let enrichedOptions = unit.unitDetails.options;
+  if (
+    selectedPlane &&
+    !unit.unitDetails.limit &&
+    unit.selectedArtefacts.find((artefact) => artefact.name === "Pointy Wizard's Hat")
+  ) {
+    enrichedOptions = [...unit.unitDetails.options, ...pointyWizardsHatSpells];
+  }
+
+  const handleSelectArtefact = (artefact) => {
+    if (pointyWizardsHatSpells) {
+      const selectedPointyWizardsHatSpells = unit.selectedOptions.filter((option) =>
+        pointyWizardsHatSpells.find((spell) => spell.name === option.name)
+      );
+      if (selectedPointyWizardsHatSpells.length && (!artefact || artefact.name !== "Pointy Wizard's Hat")) {
+        selectedPointyWizardsHatSpells.forEach(async (spell) => {
+          deselectOption(spell);
+        });
+      }
+    }
+    selectArtefact(artefact, 0);
+  };
 
   return (
     <div className="unit-footer">
@@ -34,7 +64,7 @@ const UnitFooter = ({ unit, view, selectOption, deselectOption, selectArtefact, 
         ) : null}
         {view === 'unitSelect' && unit.unitDetails.options.length ? (
           <UnitOptions
-            possibleOptions={unit.unitDetails.options}
+            possibleOptions={enrichedOptions}
             selectedOptions={unit.selectedOptions}
             view={view}
             selectOption={selectOption}
@@ -50,7 +80,7 @@ const UnitFooter = ({ unit, view, selectOption, deselectOption, selectArtefact, 
             availableArtefacts={enrichedAvailableArtefacts}
             selectedArtefacts={unit.selectedArtefacts}
             view={view}
-            selectArtefact={selectArtefact}
+            selectArtefact={handleSelectArtefact}
             sizeModifier={unit.unitDetails.size}
           />
         )}

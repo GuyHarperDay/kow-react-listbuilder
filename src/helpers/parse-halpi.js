@@ -6,17 +6,7 @@ export const enrichArmyDataForHalpisRift = (armyData, planeSpells) => {
         const spellcasterLevel = unit.spellcaster;
         const isEligibleForPlaneSpells = spellcasterLevel && !unit.limit;
         if (isEligibleForPlaneSpells) {
-          const availablePlaneSpells = planeSpells.reduce((accumulatedSpells, spell) => {
-            spell.levels.forEach((spellLevel) => {
-              accumulatedSpells.push({
-                name: `${spell.name} (${spellLevel.n})`,
-                cost: spellLevel.cost,
-                limit: spell.limit,
-                spellLevel: spellLevel.level,
-              });
-            });
-            return accumulatedSpells;
-          }, []);
+          const availablePlaneSpells = calculateAvailablePlaneSpells(planeSpells, spellcasterLevel);
           return { ...unit, options: [...unit.options, ...availablePlaneSpells] };
         } else {
           return unit;
@@ -24,4 +14,19 @@ export const enrichArmyDataForHalpisRift = (armyData, planeSpells) => {
       }),
     };
   });
+};
+
+export const calculateAvailablePlaneSpells = (planeSpells, spellcasterLevel) => {
+  return planeSpells.reduce((accumulatedSpells, spell) => {
+    spell.levels.forEach((spellLevel) => {
+      if (spellLevel.level <= spellcasterLevel)
+        accumulatedSpells.push({
+          name: `${spell.name} (${spellLevel.n})`,
+          cost: spellLevel.cost,
+          limit: spell.limit,
+          spellLevel: spellLevel.level,
+        });
+    });
+    return accumulatedSpells;
+  }, []);
 };

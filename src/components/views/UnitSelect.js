@@ -30,20 +30,18 @@ const UnitSelect = ({
   };
 
   const handleSelectOption = (option) => {
-    const previousEnrichedUnit = { ...enrichedUnit };
-    setEnrichedUnit({
+    setEnrichedUnit((previousEnrichedUnit) => ({
       ...previousEnrichedUnit,
       selectedOptions: [...previousEnrichedUnit.selectedOptions, option],
       unitCost:
         previousEnrichedUnit.unitDetails.cost +
         [...previousEnrichedUnit.selectedOptions, option].reduce((sum, o) => sum + o.cost, 0) +
         [...previousEnrichedUnit.selectedArtefacts].reduce((sum, a) => sum + a.cost, 0),
-    });
+    }));
   };
 
   const handleDeselectOption = (option) => {
-    const previousEnrichedUnit = { ...enrichedUnit };
-    setEnrichedUnit({
+    setEnrichedUnit((previousEnrichedUnit) => ({
       ...previousEnrichedUnit,
       selectedOptions: previousEnrichedUnit.selectedOptions.filter(
         (selectedOption) => selectedOption.name !== option.name
@@ -54,22 +52,23 @@ const UnitSelect = ({
           .filter((selectedOption) => selectedOption.name !== option.name)
           .reduce((sum, o) => sum + o.cost, 0) +
         [...previousEnrichedUnit.selectedArtefacts].reduce((sum, a) => sum + a.cost, 0),
-    });
+    }));
   };
 
   const handleSelectArtefact = (artefact, index) => {
-    const previousEnrichedUnit = { ...enrichedUnit };
-    if (!artefact) {
-      previousEnrichedUnit.selectedArtefacts.splice(index);
-    } else {
-      previousEnrichedUnit.selectedArtefacts[index] = artefact;
-    }
-    setEnrichedUnit({
-      ...previousEnrichedUnit,
-      unitCost:
-        previousEnrichedUnit.unitDetails.cost +
-        previousEnrichedUnit.selectedOptions.reduce((sum, o) => sum + o.cost, 0) +
-        [...previousEnrichedUnit.selectedArtefacts].reduce((sum, a) => sum + a.cost, 0),
+    setEnrichedUnit((previousEnrichedUnit) => {
+      if (!artefact) {
+        previousEnrichedUnit.selectedArtefacts.splice(index);
+      } else {
+        previousEnrichedUnit.selectedArtefacts[index] = artefact;
+      }
+      return {
+        ...previousEnrichedUnit,
+        unitCost:
+          previousEnrichedUnit.unitDetails.cost +
+          previousEnrichedUnit.selectedOptions.reduce((sum, o) => sum + o.cost, 0) +
+          [...previousEnrichedUnit.selectedArtefacts].reduce((sum, a) => sum + a.cost, 0),
+      };
     });
   };
 
