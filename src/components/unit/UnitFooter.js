@@ -5,6 +5,10 @@ import { PlaneContext } from '../../contexts/PlaneContextProvider';
 
 const UnitFooter = ({ unit, view, selectOption, deselectOption, selectArtefact, availableArtefacts }) => {
   const selectedPlane = useContext(PlaneContext);
+
+  const enrichedAvailableArtefacts =
+    availableArtefacts && selectedPlane ? [...availableArtefacts, ...selectedPlane.artefacts] : availableArtefacts;
+
   return (
     <div className="unit-footer">
       <div className="unit-footer__special">
@@ -43,7 +47,7 @@ const UnitFooter = ({ unit, view, selectOption, deselectOption, selectArtefact, 
         {view === 'unitSelect' && !['Monster', 'War Engine', 'Titan'].includes(unit.unitDetails.size) && (
           <UnitArtefacts
             artefactsLimit={1}
-            availableArtefacts={availableArtefacts}
+            availableArtefacts={enrichedAvailableArtefacts}
             selectedArtefacts={unit.selectedArtefacts}
             view={view}
             selectArtefact={selectArtefact}

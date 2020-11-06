@@ -9,6 +9,7 @@ import { v4 as uuidv4 } from 'uuid';
 import armiesData from '../../data/armies.json';
 import halpiPlanesData from '../../data/halpi-planes.json';
 import artefacts from '../../data/artefacts.json';
+import halpiArtefacts from '../../data/halpi-artefacts.json';
 import calculateUnallocated from '../../helpers/unlocks';
 import calculatePointsTotal from '../../helpers/points';
 import calculateDuplicates from '../../helpers/duplicates';
@@ -200,6 +201,8 @@ const Index = ({ type = 'standard' }) => {
     window.scrollTo(0, 0);
   };
 
+  const enrichedAvailableArtefacts = type === 'halpi' ? [...artefacts, ...halpiArtefacts] : [...artefacts];
+
   if (!isLoaded) {
     return <div>Loading...</div>;
   } else if (display === 'planesIndex') {
@@ -268,7 +271,7 @@ const Index = ({ type = 'standard' }) => {
             editUnit={handleEditUnit}
             deleteUnit={handleDeleteUnit}
             deleteConfirm={display === 'deleteConfirm'}
-            availableArtefacts={artefacts}
+            availableArtefacts={enrichedAvailableArtefacts}
           />
         </PlaneContextProvider>
       </main>

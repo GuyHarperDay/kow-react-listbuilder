@@ -10,9 +10,6 @@ const UnitOptions = ({ view, possibleOptions, selectedOptions, selectOption, des
   };
 
   const isChecked = (option) => {
-    console.log('isChecked being called');
-    console.log('selectedOptions', selectedOptions);
-    console.log(!!(selectedOptions && selectedOptions.find((selectedOption) => selectedOption.name === option.name)));
     return !!(selectedOptions && selectedOptions.find((selectedOption) => selectedOption.name === option.name));
   };
 
