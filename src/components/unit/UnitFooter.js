@@ -13,7 +13,12 @@ const UnitFooter = ({ unit, view, selectOption, deselectOption, selectArtefact, 
   const pointyWizardsHatSpells =
     selectedPlane &&
     [...calculateAvailablePlaneSpells(selectedPlane.spells, unit.unitDetails.spellcaster + 1)].filter(
-      (spell) => !unit.unitDetails.options.find((allocatedSpell) => allocatedSpell.name === spell.name)
+      (spell) =>
+        !unit.unitDetails.options.find((allocatedSpell) => {
+          return allocatedSpell.nValue
+            ? allocatedSpell.name === spell.name && allocatedSpell.nValue === spell.nValue
+            : allocatedSpell.name === spell.name;
+        })
     );
 
   let enrichedOptions = unit.unitDetails.options;
@@ -28,7 +33,7 @@ const UnitFooter = ({ unit, view, selectOption, deselectOption, selectArtefact, 
   const handleSelectArtefact = (artefact) => {
     if (pointyWizardsHatSpells) {
       const selectedPointyWizardsHatSpells = unit.selectedOptions.filter((option) =>
-        pointyWizardsHatSpells.find((spell) => spell.name === option.name)
+        pointyWizardsHatSpells.find((spell) => spell.name === option.name && spell.nValue === option.nValue)
       );
       if (selectedPointyWizardsHatSpells.length && (!artefact || artefact.name !== "Pointy Wizard's Hat")) {
         selectedPointyWizardsHatSpells.forEach(async (spell) => {

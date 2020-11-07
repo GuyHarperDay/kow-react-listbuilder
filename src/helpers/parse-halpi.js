@@ -21,10 +21,11 @@ export const calculateAvailablePlaneSpells = (planeSpells, spellcasterLevel) => 
     spell.levels.forEach((spellLevel) => {
       if (spellLevel.level <= spellcasterLevel)
         accumulatedSpells.push({
-          name: `${spell.name} (${spellLevel.n})`,
+          name: spell.name,
           cost: spellLevel.cost,
           limit: spell.limit,
           spellLevel: spellLevel.level,
+          nValue: spellLevel.n,
         });
     });
     return accumulatedSpells;

@@ -5,4 +5,5 @@
 -new living legends for halpi's rift
 -halpi's rift cok updates (units and artefacts)
 -halpi's rift listbuilder - remember multiple artefacts index - search for selectArtefact
--implement limit on limited spell with different n value
+-Less padding on landing page buttons
+-Save last selected tab in state

@@ -125,11 +125,12 @@ const Index = ({ type = 'standard' }) => {
       return pointsObj;
     }, {});
     setPoints(points);
+    return points;
   };
 
-  const processDuplicates = () => {
-    const pointsTotal = Object.keys(points).reduce((sum, key) => {
-      return (sum += points[key]);
+  const processDuplicates = (newPoints) => {
+    const pointsTotal = Object.keys(newPoints).reduce((sum, key) => {
+      return (sum += newPoints[key]);
     }, 0);
     const isTooManyDuplicates = calculateDuplicates(
       pointsTotal,
@@ -159,8 +160,8 @@ const Index = ({ type = 'standard' }) => {
   useEffect(init, []);
   useEffect(() => {
     processUnlocks();
-    processPoints();
-    processDuplicates();
+    const newPoints = processPoints();
+    processDuplicates(newPoints);
     processArtefacts();
     processLimits();
     if (armyListState.length) {

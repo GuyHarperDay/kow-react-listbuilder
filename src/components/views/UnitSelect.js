@@ -41,18 +41,26 @@ const UnitSelect = ({
   };
 
   const handleDeselectOption = (option) => {
-    setEnrichedUnit((previousEnrichedUnit) => ({
-      ...previousEnrichedUnit,
-      selectedOptions: previousEnrichedUnit.selectedOptions.filter(
-        (selectedOption) => selectedOption.name !== option.name
-      ),
-      unitCost:
-        previousEnrichedUnit.unitDetails.cost +
-        previousEnrichedUnit.selectedOptions
-          .filter((selectedOption) => selectedOption.name !== option.name)
-          .reduce((sum, o) => sum + o.cost, 0) +
-        [...previousEnrichedUnit.selectedArtefacts].reduce((sum, a) => sum + a.cost, 0),
-    }));
+    setEnrichedUnit((previousEnrichedUnit) => {
+      return {
+        ...previousEnrichedUnit,
+        selectedOptions: previousEnrichedUnit.selectedOptions.filter((selectedOption) => {
+          return selectedOption.nValue
+            ? selectedOption.nValue !== option.nValue && selectedOption.name === option.name
+            : selectedOption.name !== option.name;
+        }),
+        unitCost:
+          previousEnrichedUnit.unitDetails.cost +
+          previousEnrichedUnit.selectedOptions
+            .filter((selectedOption) => {
+              return selectedOption.nValue
+                ? selectedOption.nValue !== option.nValue && selectedOption.name === option.name
+                : selectedOption.name !== option.name;
+            })
+            .reduce((sum, o) => sum + o.cost, 0) +
+          [...previousEnrichedUnit.selectedArtefacts].reduce((sum, a) => sum + a.cost, 0),
+      };
+    });
   };
 
   const handleSelectArtefact = (artefact, index) => {

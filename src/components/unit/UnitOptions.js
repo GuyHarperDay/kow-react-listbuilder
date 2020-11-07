@@ -4,13 +4,23 @@ import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup';
 
 const UnitOptions = ({ view, possibleOptions, selectedOptions, selectOption, deselectOption }) => {
   const handleChange = (option) => {
-    selectedOptions.find((selectedOption) => selectedOption.name === option.name)
+    selectedOptions.find((selectedOption) => {
+      return selectedOption.nValue
+        ? selectedOption.name === option.name && selectedOption.nValue === option.nValue
+        : selectedOption.name === option.name;
+    })
       ? deselectOption(option)
       : selectOption(option);
   };
 
   const isChecked = (option) => {
-    return !!(selectedOptions && selectedOptions.find((selectedOption) => selectedOption.name === option.name));
+    return !!(
+      selectedOptions &&
+      selectedOptions.find((selectedOption) => {
+        const hasSameName = selectedOption.name === option.name;
+        return selectedOption.nValue ? hasSameName && selectedOption.nValue === option.nValue : hasSameName;
+      })
+    );
   };
 
   return (
@@ -22,18 +32,23 @@ const UnitOptions = ({ view, possibleOptions, selectedOptions, selectOption, des
           </p>
           <ul className="unit-options__list--select">
             {possibleOptions.map((option, index) => (
-              <li key={option.name}>
+              <li key={`${option.name}${option.nValue ? option.nValue : ''}`}>
                 <ToggleButtonGroup type="checkbox" onChange={() => handleChange(option)} value={isChecked(option)}>
                   <ToggleButton
                     className={`unit-options__toggle${isChecked(option) ? '--selected' : ''}`}
-                    id={`${option.name}-${index}`}
+                    id={option.nValue ? `${option.name}(${option.nValue})-${index}` : `${option.name}-${index}`}
                     variant={isChecked(option) ? 'success' : 'outline-success'}
                     size="sm"
                   >
                     {option.cost}pts
                   </ToggleButton>
                 </ToggleButtonGroup>
-                <label htmlFor={`${option.name}-${index}`}>{option.name}</label>
+                <label
+                  htmlFor={option.nValue ? `${option.name}(${option.nValue})-${index}` : `${option.name}-${index}`}
+                >
+                  {option.name}
+                  {(option.nValue && ` (${option.nValue})`) || ''}
+                </label>
               </li>
             ))}
           </ul>
@@ -44,8 +59,9 @@ const UnitOptions = ({ view, possibleOptions, selectedOptions, selectOption, des
           <p>
             <span className="unit-footer__label">Options: </span>
             {selectedOptions.map((option, index) => (
-              <span key={option.name}>
-                {option.name} ({option.cost}pts)
+              <span key={`${option.name}${option.nValue ? option.nValue : ''}`}>
+                {option.name}
+                {(option.nValue && ` (${option.nValue})`) || ''} ({option.cost}pts)
                 {index < selectedOptions.length - 1 ? ', ' : ''}
               </span>
             ))}
@@ -59,8 +75,9 @@ const UnitOptions = ({ view, possibleOptions, selectedOptions, selectOption, des
           </p>
           <ul>
             {possibleOptions.map((option) => (
-              <li key={option.name}>
-                {option.name}: {option.cost}pts
+              <li key={`${option.name}${option.nValue ? option.nValue : ''}`}>
+                {option.name}
+                {(option.nValue && ` (${option.nValue})`) || ''}: {option.cost}pts
               </li>
             ))}
           </ul>
