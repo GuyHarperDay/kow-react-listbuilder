@@ -5,7 +5,16 @@ import ButtonRow from 'components/common/ButtonRow';
 import Tabs from 'react-bootstrap/Tabs';
 import Tab from 'react-bootstrap/Tab';
 
-const FactionUnitsIndex = ({ army, goToDisplay, selectUnit, selectArmy, fromArmyList, displaySelectOtherArmy }) => {
+const FactionUnitsIndex = ({
+  army,
+  goToDisplay,
+  selectUnit,
+  selectArmy,
+  fromArmyList,
+  displaySelectOtherArmy,
+  defaultTab,
+  setLastTab,
+}) => {
   // All the units in the selected faction
 
   const handleClickAdd = (unit) => {
@@ -25,20 +34,7 @@ const FactionUnitsIndex = ({ army, goToDisplay, selectUnit, selectArmy, fromArmy
     }
   });
 
-  const [filteredMergedUnits, setFilteredMergedUnits] = useState(
-    [...mergedFactionList].filter(
-      (unitArr) =>
-        ['Infantry', 'Heavy Infantry'].includes(unitArr[0].type) &&
-        !['Hero', 'War Engine', 'Monster', 'Titan'].includes(unitArr[0].size)
-    )
-  );
-
-  const handleDisplayOtherArmy = () => {
-    goToDisplay('armiesIndex');
-    window.scrollTo(0, 0);
-  };
-
-  const handleSelectTab = (label) => {
+  const filterUnitsByLabel = (label) => {
     const typesDict = {
       'Inf/HI': ['Infantry', 'Heavy Infantry'],
       'Cav/Cht/LC': ['Cavalry', 'Chariot', 'Large Cavalry'],
@@ -49,7 +45,7 @@ const FactionUnitsIndex = ({ army, goToDisplay, selectUnit, selectArmy, fromArmy
       WE: ['War Engine'],
       'Mon/Tit': ['Monster', 'Titan'],
     };
-    const filteredUnits = [...mergedFactionList].filter((unitArr) => {
+    return [...mergedFactionList].filter((unitArr) => {
       if (typesDict[label]) {
         return (
           typesDict[label].includes(unitArr[0].type) &&
@@ -59,7 +55,18 @@ const FactionUnitsIndex = ({ army, goToDisplay, selectUnit, selectArmy, fromArmy
         return sizesDict[label].includes(unitArr[0].size);
       }
     });
-    setFilteredMergedUnits(filteredUnits);
+  };
+
+  const [filteredMergedUnits, setFilteredMergedUnits] = useState(filterUnitsByLabel(defaultTab));
+
+  const handleDisplayOtherArmy = () => {
+    goToDisplay('armiesIndex');
+    window.scrollTo(0, 0);
+  };
+
+  const handleSelectTab = (label) => {
+    setFilteredMergedUnits(filterUnitsByLabel(label));
+    setLastTab(label);
   };
 
   return (
@@ -69,7 +76,7 @@ const FactionUnitsIndex = ({ army, goToDisplay, selectUnit, selectArmy, fromArmy
           <Button text="Select other army" onClick={handleDisplayOtherArmy} />
         </ButtonRow>
       )}
-      <Tabs className="units-index__tabs" onSelect={handleSelectTab} variant="tabs" defaultActiveKey="Inf/HI">
+      <Tabs className="units-index__tabs" onSelect={handleSelectTab} variant="tabs" defaultActiveKey={defaultTab}>
         {['Inf/HI', 'Cav/Cht/LC', 'Sw/LI/MI', 'Hero', 'WE', 'Mon/Tit'].map((unitType) => {
           return (
             <Tab className="units-index__tab" eventKey={unitType} title={unitType} key={unitType}>

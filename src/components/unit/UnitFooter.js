@@ -87,16 +87,18 @@ const UnitFooter = ({ unit, view, selectOption, deselectOption, selectArtefact, 
         {view === 'armyList' && unit.selectedArtefacts.length ? (
           <UnitArtefacts selectedArtefacts={unit.selectedArtefacts} view={view} />
         ) : null}
-        {view === 'unitSelect' && !['Monster', 'War Engine', 'Titan'].includes(unit.unitDetails.size) && (
-          <UnitArtefacts
-            artefactsLimit={1}
-            availableArtefacts={enrichedAvailableArtefacts}
-            selectedArtefacts={unit.selectedArtefacts}
-            view={view}
-            selectArtefact={(a, i) => handleSelectArtefact(a, i)}
-            sizeModifier={unit.unitDetails.size}
-          />
-        )}
+        {view === 'unitSelect' &&
+          !['Monster', 'War Engine', 'Titan'].includes(unit.unitDetails.size) &&
+          !unit.unitDetails.limit && (
+            <UnitArtefacts
+              artefactsLimit={1}
+              availableArtefacts={enrichedAvailableArtefacts}
+              selectedArtefacts={unit.selectedArtefacts}
+              view={view}
+              selectArtefact={(a, i) => handleSelectArtefact(a, i)}
+              sizeModifier={unit.unitDetails.size}
+            />
+          )}
       </div>
     </div>
   );

@@ -31,6 +31,7 @@ const Index = ({ type = 'standard' }) => {
   const [tooManyDuplicates, setTooManyDuplicates] = useState(null);
   const [overLimits, setOverLimits] = useState(null);
   const [artefactDuplicates, setArtefactDuplicates] = useState(null);
+  const [lastTab, setLastTab] = useState(null);
 
   const initialArmyListState = [];
 
@@ -211,7 +212,7 @@ const Index = ({ type = 'standard' }) => {
       <main>
         <header>
           <p className="switch-view">
-            This listbuilder contains units available in the Halpi's Rift campaign, including FAQs up to 1.1 and Clash
+            This listbuilder contains units available in the Halpi's Rift campaign, including FAQs up to 1.1.1 and Clash
             of Kings 2021. For standard KOW v3 listbuilding, <Link to="/kow-react-listbuilder">click here</Link>
           </p>
         </header>
@@ -224,14 +225,14 @@ const Index = ({ type = 'standard' }) => {
         <header>
           {type === 'halpi' && (
             <p className="switch-view">
-              This listbuilder contains units available in the Halpi's Rift campaign, including FAQs up to 1.1 and Clash
-              of Kings 2021. For standard KOW v3 listbuilding, <Link to="/kow-react-listbuilder">click here</Link>
+              This listbuilder contains units available in the Halpi's Rift campaign, including FAQs up to 1.1.1 and
+              Clash of Kings 2021. For standard KOW v3 listbuilding, <Link to="/kow-react-listbuilder">click here</Link>
             </p>
           )}
           {type === 'standard' && (
             <p className="switch-view">
-              This listbuilder contains units available in Kings of War v3 rules, including FAQs up to 1.1 and Clash of
-              Kings 2021. For Halpi's Rift campaign listbuilding,{' '}
+              This listbuilder contains units available in Kings of War v3 rules, including FAQs up to 1.1.1 and Clash
+              of Kings 2021. For Halpi's Rift campaign listbuilding,{' '}
               <Link to="/kow-react-listbuilder/halpis-rift">click here</Link>
             </p>
           )}
@@ -256,6 +257,8 @@ const Index = ({ type = 'standard' }) => {
           unallocated={unallocated}
           displaySelectOtherArmy={false}
           tooManyDuplicates={tooManyDuplicates}
+          defaultTab={lastTab || 'Inf/HI'}
+          setLastTab={setLastTab}
         />
       </main>
     );

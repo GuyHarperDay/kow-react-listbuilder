@@ -33,11 +33,11 @@ const UnitTableRow = ({ unit, displayAddButton = false, addUnit = false }) => {
       <td>
         <p>{unitDetails.nerve}</p>
       </td>
-      <td>
+      <td className="d-print-none">
         <p>{unitDetails.cost}</p>
       </td>
       {displayAddButton && (
-        <td>
+        <td className="d-print-none">
           <Button text="Add" onClick={() => addUnit(unit)} size="sm" />
         </td>
       )}

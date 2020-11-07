@@ -20,6 +20,9 @@ body {
 main {
   max-width: 768px;
   margin: 0 auto;
+  @media print {
+    max-width: 90%;
+  }
 }
 
 code {

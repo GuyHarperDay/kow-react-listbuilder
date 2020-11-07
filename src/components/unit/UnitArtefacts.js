@@ -3,7 +3,7 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import { PlaneContext } from '../../contexts/PlaneContextProvider';
 
-const UnitArtefacts = ({ view, availableArtefacts, selectArtefact, selectedArtefacts, sizeModifier, limit = 1 }) => {
+const UnitArtefacts = ({ view, availableArtefacts, selectArtefact, selectedArtefacts, sizeModifier }) => {
   const selectedPlane = useContext(PlaneContext);
 
   const filteredArtefacts =
@@ -78,7 +78,7 @@ const UnitArtefacts = ({ view, availableArtefacts, selectArtefact, selectedArtef
       {view === 'armyList' && (
         <div className="unit-artefacts--select">
           <p>
-            <span className="unit-footer__label">Artefact{limit !== 1 ? 's' : ''}: </span>
+            <span className="unit-footer__label">Artefact{selectedArtefacts.length > 1 ? 's' : ''}: </span>
             {selectedArtefacts.map((artefact, index) => (
               <span key={artefact.name}>
                 {artefact.name} ({artefact.cost}pts)

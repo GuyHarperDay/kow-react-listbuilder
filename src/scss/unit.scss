@@ -1,16 +1,26 @@
 .multi-unit-row,
 .unit-row {
   margin-bottom: 2rem;
+  @media print {
+    break-inside: avoid;
+  }
 }
 
 .unit-header {
-  padding: 0 0.5rem;
+  padding: 0.25rem 0.5rem;
   margin-bottom: 0.25rem;
   display: flex;
   align-items: space-between;
+  background-color: #eee;
+  @media print {
+    color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    background-color: #ccc;
+  }
   &__unit-name-container {
     display: flex;
-    align-items: flex-end;
+    align-items: center;
   }
   &__unit-name {
     @extend .h5;
@@ -20,16 +30,23 @@
     @include media-breakpoint-down(xs) {
       font-size: 1.2rem;
     }
+    @media print {
+      font-size: 1.5rem;
+    }
   }
   &__unit-type-container {
     display: flex;
-    align-items: flex-end;
+    align-items: center;
     justify-content: flex-end;
   }
   &__unit-type {
     @extend .h6;
     text-align: right;
     margin-bottom: 0;
+    display: flex;
+    .badge {
+      margin-right: 0.5rem;
+    }
   }
 }
 

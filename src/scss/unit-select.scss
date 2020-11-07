@@ -2,11 +2,14 @@
   margin-top: 2rem;
 }
 
-.unit-artefacts__dropdown.show.dropdown {
-  .unit-artefacts__dropdown-item {
-    &:last-child {
-      margin-bottom: 37px;
-      border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+.unit-artefacts__dropdown {
+  margin-top: 10px;
+  &.show.dropdown {
+    .unit-artefacts__dropdown-item {
+      &:last-child {
+        margin-bottom: 37px;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+      }
     }
   }
 }
