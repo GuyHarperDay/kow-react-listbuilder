@@ -66,7 +66,7 @@ const UnitSelect = ({
   const handleSelectArtefact = (artefact, index) => {
     setEnrichedUnit((previousEnrichedUnit) => {
       if (!artefact) {
-        previousEnrichedUnit.selectedArtefacts.splice(index);
+        previousEnrichedUnit.selectedArtefacts.splice(index, 1);
       } else {
         previousEnrichedUnit.selectedArtefacts[index] = artefact;
       }

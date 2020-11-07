@@ -30,18 +30,22 @@ const UnitFooter = ({ unit, view, selectOption, deselectOption, selectArtefact, 
     enrichedOptions = [...unit.unitDetails.options, ...pointyWizardsHatSpells];
   }
 
-  const handleSelectArtefact = (artefact) => {
+  const handleSelectArtefact = (artefact, index) => {
     if (pointyWizardsHatSpells) {
       const selectedPointyWizardsHatSpells = unit.selectedOptions.filter((option) =>
         pointyWizardsHatSpells.find((spell) => spell.name === option.name && spell.nValue === option.nValue)
       );
-      if (selectedPointyWizardsHatSpells.length && (!artefact || artefact.name !== "Pointy Wizard's Hat")) {
+      const isSelectingNonPointyHatArtefactAtIndex =
+        unit.selectedArtefacts[index] &&
+        unit.selectedArtefacts[index].name === "Pointy Wizard's Hat" &&
+        (!artefact || artefact.name !== "Pointy Wizard's Hat");
+      if (selectedPointyWizardsHatSpells.length && isSelectingNonPointyHatArtefactAtIndex) {
         selectedPointyWizardsHatSpells.forEach(async (spell) => {
           deselectOption(spell);
         });
       }
     }
-    selectArtefact(artefact, 0);
+    selectArtefact(artefact, index);
   };
 
   return (
@@ -55,7 +59,7 @@ const UnitFooter = ({ unit, view, selectOption, deselectOption, selectArtefact, 
           <span className="unit-footer__label">Keywords: </span>
           {unit.unitDetails.keywords}
         </p>
-        {unit.unitDetails.spellcaster && (
+        {(unit.unitDetails.spellcaster || unit.unitDetails.spellcaster === 0) && (
           <p>
             <span className="unit-footer__label">Spellcaster: </span>
             {unit.unitDetails.spellcaster}
@@ -67,7 +71,11 @@ const UnitFooter = ({ unit, view, selectOption, deselectOption, selectArtefact, 
         {view === 'armyList' && unit.selectedOptions.length ? (
           <UnitOptions selectedOptions={unit.selectedOptions} view={view} />
         ) : null}
-        {view === 'unitSelect' && unit.unitDetails.options.length ? (
+        {view === 'unitSelect' &&
+        (unit.unitDetails.options.length ||
+          (pointyWizardsHatSpells &&
+            !unit.unitDetails.limit &&
+            unit.selectedArtefacts.find((artefact) => artefact.name === "Pointy Wizard's Hat"))) ? (
           <UnitOptions
             possibleOptions={enrichedOptions}
             selectedOptions={unit.selectedOptions}
@@ -85,7 +93,7 @@ const UnitFooter = ({ unit, view, selectOption, deselectOption, selectArtefact, 
             availableArtefacts={enrichedAvailableArtefacts}
             selectedArtefacts={unit.selectedArtefacts}
             view={view}
-            selectArtefact={handleSelectArtefact}
+            selectArtefact={(a, i) => handleSelectArtefact(a, i)}
             sizeModifier={unit.unitDetails.size}
           />
         )}

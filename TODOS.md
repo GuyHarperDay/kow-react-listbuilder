@@ -4,6 +4,7 @@
 -faq 1.1 updates
 -new living legends for halpi's rift
 -halpi's rift cok updates (units and artefacts)
--halpi's rift listbuilder - remember multiple artefacts index - search for selectArtefact
+-halpi's rift listbuilder - remember multiple artefacts index - search for selectArtefact and handleSelectArtefact
 -Less padding on landing page buttons
 -Save last selected tab in state
+-no artefacts for living legends
